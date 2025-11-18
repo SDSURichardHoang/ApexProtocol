@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
         animator.SetFloat("InputY", verticalAxis);
 
         Vector3 cameraFowardXZ = new Vector3(playerCamera.transform.forward.x, 0f, playerCamera.transform.forward.z).normalized;
-        Vector3 cameraRightXZ = new Vector3(playerCamera.transform.right.x, 0f, playerCamera.transform.forward.z).normalized;
+        Vector3 cameraRightXZ = new Vector3(playerCamera.transform.right.x, 0f, playerCamera.transform.right.z).normalized;
         Vector3 movementDirection = cameraRightXZ * playerinput.MovementInput.x + cameraFowardXZ * playerinput.MovementInput.y;
 
         Vector3 movementDelta = movementDirection * runAcceleration * Time.deltaTime;
@@ -65,9 +65,9 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.Space)&& isGrounded)
         {
-            Debug.Log("jumpin");
-            jumpVelocity.y = 2.5f; // set jump velocity
+            isGrounded = false;
             animator.SetBool("isJumping", true);
+            jumpVelocity.y = 3.5f; // set jump velocity
         }
         
         //gravity
