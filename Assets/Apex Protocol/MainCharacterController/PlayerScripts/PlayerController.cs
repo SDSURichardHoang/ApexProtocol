@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
@@ -15,6 +17,8 @@ public class PlayerController : MonoBehaviour
     public float drag = 0.27f;
 
     public Vector3 jumpVelocity;
+    private float sprintBoost;
+    bool isSprinting = false;
 
     public float gravityConst = -9.81F;
 
@@ -59,21 +63,39 @@ public class PlayerController : MonoBehaviour
         // jump
 
         bool isGrounded = characterController.isGrounded;
+        //float testF = 1f;
         if (isGrounded && jumpVelocity.y < 0)
         {
             jumpVelocity.y = -1f; // small downward force to stick to ground
+            //testF = 1f;
         }
         if (Input.GetKeyDown(KeyCode.Space)&& isGrounded)
         {
             isGrounded = false;
             animator.SetBool("isJumping", true);
-            jumpVelocity.y = 3.5f; // set jump velocity
+            jumpVelocity.y = 4f; // set jump velocity
+       //     testF = 4f;
+        }
+
+
+            isSprinting = false;
+        //sprint 
+        if (Input.GetKey(KeyCode.LeftShift) && sprintConstraints(horizontalAxis,verticalAxis))
+        {
+
+            newMovement = newMovement * 2f;
+            isSprinting = true;
+
         }
         
+        
+        animator.SetBool("isSprinting", isSprinting);
+
         //gravity
         jumpVelocity.y += gravityConst * Time.deltaTime;
 
         Vector3 finalMovement = newMovement + new Vector3(0f, jumpVelocity.y, 0f);
+        //finalMovement = finalMovement * testF;
         characterController.Move((finalMovement * Time.deltaTime));
         if (isGrounded)
         {
@@ -92,6 +114,24 @@ public class PlayerController : MonoBehaviour
 
         playerCamera.transform.rotation = Quaternion.Euler(camerarotation.y, camerarotation.x, 0f);
     }
+
+    public bool sprintConstraints(float x, float y)
+    {
+        bool allowSprint = true;
+        if( (x != 0 && y!= -1) && (x!= -1 && y!=-1) && (x!= 1 && y!= -1 ) && (x != 0 && y!=0) ) 
+        {
+            Debug.Log("Sprint Allowed with x:" + x +" and y:" +y);
+            return allowSprint;
+        }
+            Debug.Log("Sprint not allowed with x:" + x +" and y:" +y);
+        return !allowSprint;
+
+        
+    }
+    
+        
+        
+
 
 
 }
