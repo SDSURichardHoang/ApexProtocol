@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     public void Update()
     {
         Vector3 cameraFowardXZ = new Vector3(playerCamera.transform.forward.x, 0f, playerCamera.transform.forward.z).normalized;
-        Vector3 cameraRightXZ = new Vector3(playerCamera.transform.right.x, 0f, playerCamera.transform.forward.z).normalized;
+        Vector3 cameraRightXZ = new Vector3(playerCamera.transform.right.x, 0f, playerCamera.transform.right.z).normalized;
         Vector3 movementDirection = cameraRightXZ * playerinput.MovementInput.x + cameraFowardXZ * playerinput.MovementInput.y;
 
         Vector3 movementDelta = movementDirection * runAcceleration * Time.deltaTime;
