@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem.XR;
 using UnityEngine.Rendering;
@@ -13,12 +14,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] public Animator animator;
 
     public float runAcceleration = 0.25f;
-    public float runSpeed = 2f;
+    public float runSpeed = 6f;
+    public float sprintSpeed = 8f;
     public float drag = 0.27f;
 
     public Vector3 jumpVelocity;
     private float sprintBoost;
     bool isSprinting = false;
+    bool isRolling = false;
+    float rollTimer;
+    bool beginRoll;
 
     public float gravityConst = -9.81F;
 
@@ -29,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 camerarotation = Vector2.zero;
     private Vector2 playerrotation = Vector2.zero;
 
+    private Vector3 newMovement;
 
     private PlayerKeyboard playerinput;
     private float horizontalAxis;
@@ -36,6 +42,8 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         playerinput = GetComponent<PlayerKeyboard>();
+        rollTimer = 1.2f;
+        
     }
 
     public void Update()
@@ -52,11 +60,12 @@ public class PlayerController : MonoBehaviour
         Vector3 movementDirection = cameraRightXZ * playerinput.MovementInput.x + cameraFowardXZ * playerinput.MovementInput.y;
 
         Vector3 movementDelta = movementDirection * runAcceleration * Time.deltaTime;
-        Vector3 newMovement = characterController.velocity + movementDelta;
+        newMovement = characterController.velocity + movementDelta;
 
         Vector3 currentMove = newMovement.normalized * drag * Time.deltaTime;
         newMovement = (newMovement.magnitude > drag * Time.deltaTime) ? newMovement - currentMove : Vector3.zero;
         newMovement = Vector3.ClampMagnitude(newMovement, runSpeed);
+
 
         //characterController.Move(newMovement * Time.deltaTime);
 
@@ -78,18 +87,51 @@ public class PlayerController : MonoBehaviour
         }
 
 
-            isSprinting = false;
         //sprint 
+        isSprinting = false;
         if (Input.GetKey(KeyCode.LeftShift) && sprintConstraints(horizontalAxis,verticalAxis))
         {
-
-            newMovement = newMovement * 2f;
+            //newMovement = newMovement * 2f;
+            runSpeed = sprintSpeed;
             isSprinting = true;
+
 
         }
         
         
         animator.SetBool("isSprinting", isSprinting);
+
+
+        Vector3 frontRoll = new Vector3(9f,0f,0f);
+        Vector3 leftRoll  = new Vector3(0f,0f,-9f);
+        Vector3 rightRoll  = new Vector3(0f,0f,9f);
+        Vector3 backRoll  = new Vector3(-9f,0f,0f);
+
+
+
+
+
+
+        //roll
+        if (isRolling)
+        {
+            rollTimer -= Time.deltaTime;
+            animator.SetBool("isRolling", true);
+            runSpeed = 10f;
+            if (rollTimer < 0)
+            {
+                animator.SetBool("isRolling",false);
+                isRolling = false;
+                rollTimer = 1.1f;
+            }
+        }
+        if (Input.GetKeyDown(KeyCode.LeftControl) && rollConstraints(horizontalAxis,verticalAxis))
+        {
+            isRolling = true;
+            Debug.Log(getRollDirection(horizontalAxis, verticalAxis));
+
+
+        }
 
         //gravity
         jumpVelocity.y += gravityConst * Time.deltaTime;
@@ -100,6 +142,11 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             animator.SetBool("isJumping",false);
+        }
+
+        if (!isSprinting && !isRolling)
+        {
+            runSpeed = 6f;
         }
 
     }
@@ -118,20 +165,43 @@ public class PlayerController : MonoBehaviour
     public bool sprintConstraints(float x, float y)
     {
         bool allowSprint = true;
-        if( (x != 0 && y!= -1) && (x!= -1 && y!=-1) && (x!= 1 && y!= -1 ) && (x != 0 && y!=0) ) 
+        if (y > 0.1 || (y==0 && x!=0))
         {
-            Debug.Log("Sprint Allowed with x:" + x +" and y:" +y);
+            //Debug.Log("Sprint Allowed with x:" + x +" and y:" +y);
             return allowSprint;
         }
-            Debug.Log("Sprint not allowed with x:" + x +" and y:" +y);
-        return !allowSprint;
+
+            //Debug.Log("Sprint not allowed with x:" + x +" and y:" +y);
+            return !allowSprint;
+        
+    }
+    public bool rollConstraints(float x, float y)
+    {
+        bool allowRoll = true;
+        if (y > 0.1 || (y==0 && x!=0)|| (y<0&& x==0))
+        {
+            //Debug.Log("Roll Allowed with x:" + x +" and y:" +y);
+            return allowRoll;
+        }
+            //Debug.Log("Roll not allowed with x:" + x +" and y:" +y);
+        return !allowRoll;
 
         
     }
-    
-        
-        
-
+    private string getRollDirection(float x, float y)
+    {
+        if (y > 0.1)
+        {
+            return "forward";
+        }else if (y == 0 && x < 0)
+        {
+            return "left";
+        }else if(y == 0 && x> 0)
+        {
+            return "right";
+        }
+            return "back";
+    }
 
 
 }
