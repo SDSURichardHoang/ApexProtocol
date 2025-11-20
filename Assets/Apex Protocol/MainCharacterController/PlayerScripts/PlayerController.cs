@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 
     public float runAcceleration = 0.25f;
     public float runSpeed = 6f;
-    public float sprintSpeed = 8f;
+    public float sprintSpeed = 9f;
     public float drag = 0.27f;
 
     public Vector3 jumpVelocity;
@@ -89,7 +89,7 @@ public class PlayerController : MonoBehaviour
 
         //sprint 
         isSprinting = false;
-        if (Input.GetKey(KeyCode.LeftShift) && sprintConstraints(horizontalAxis,verticalAxis))
+        if (Input.GetKey(KeyCode.LeftShift) && sprintConstraints(horizontalAxis,verticalAxis)&&isGrounded)
         {
             //newMovement = newMovement * 2f;
             runSpeed = sprintSpeed;
@@ -102,10 +102,6 @@ public class PlayerController : MonoBehaviour
         animator.SetBool("isSprinting", isSprinting);
 
 
-        Vector3 frontRoll = new Vector3(9f,0f,0f);
-        Vector3 leftRoll  = new Vector3(0f,0f,-9f);
-        Vector3 rightRoll  = new Vector3(0f,0f,9f);
-        Vector3 backRoll  = new Vector3(-9f,0f,0f);
 
 
 
@@ -128,7 +124,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftControl) && rollConstraints(horizontalAxis,verticalAxis))
         {
             isRolling = true;
-            Debug.Log(getRollDirection(horizontalAxis, verticalAxis));
 
 
         }
@@ -187,20 +182,6 @@ public class PlayerController : MonoBehaviour
         return !allowRoll;
 
         
-    }
-    private string getRollDirection(float x, float y)
-    {
-        if (y > 0.1)
-        {
-            return "forward";
-        }else if (y == 0 && x < 0)
-        {
-            return "left";
-        }else if(y == 0 && x> 0)
-        {
-            return "right";
-        }
-            return "back";
     }
 
 
