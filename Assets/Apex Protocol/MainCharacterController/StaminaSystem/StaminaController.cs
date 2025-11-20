@@ -44,7 +44,7 @@ public class StaminaController : MonoBehaviour
             // if stamina is not full
             if (playerStamina <= maxStamina - 0.1 )
             {
-                if(playerStamina < 2)
+                if(playerStamina <0.1)
                 {
                     allowRegen = false;
                     regenTimer -= Time.deltaTime;
@@ -55,7 +55,7 @@ public class StaminaController : MonoBehaviour
                     }
                 }
 
-                if (allowRegen)
+                if (allowRegen) 
                 {
                     playerStamina += staminaRegen * Time.deltaTime;
                     UpdateStamina(1);
@@ -111,9 +111,5 @@ public class StaminaController : MonoBehaviour
         }
 
 
-    }
-    IEnumerator RegenDelay()
-    {
-        yield return new WaitForSeconds(1f);
     }
 }

@@ -97,7 +97,8 @@ public class PlayerController : MonoBehaviour
 
         //sprint 
         isSprinting = false;
-        if (Input.GetKey(KeyCode.LeftShift) && sprintConstraints(horizontalAxis,verticalAxis)&&isGrounded&& stamina>2)
+        if (Input.GetKey(KeyCode.LeftShift) && sprintConstraints(horizontalAxis,verticalAxis)&&isGrounded&& stamina>0.5)
+
         {
             StaminaController.Instance.Sprinting();
             //newMovement = newMovement * 2f;
@@ -113,8 +114,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-
-
+ 
 
 
         //roll
