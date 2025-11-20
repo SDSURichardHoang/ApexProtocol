@@ -8,10 +8,14 @@ using UnityEngine.InputSystem.XR;
 using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
+
 {
+    public static PlayerController Instance;
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Camera playerCamera;
     [SerializeField] public Animator animator;
+    [HideInInspector] public StaminaController staminaController;
+
 
     public float runAcceleration = 0.25f;
     public float runSpeed = 6f;
@@ -20,7 +24,7 @@ public class PlayerController : MonoBehaviour
 
     public Vector3 jumpVelocity;
     private float sprintBoost;
-    bool isSprinting = false;
+    public bool isSprinting = false;
     bool isRolling = false;
     float rollTimer;
     bool beginRoll;
@@ -41,8 +45,10 @@ public class PlayerController : MonoBehaviour
     private float verticalAxis; 
     private void Awake()
     {
+        Instance = this;
         playerinput = GetComponent<PlayerKeyboard>();
         rollTimer = 1.2f;
+        staminaController = GetComponent<StaminaController>();
         
     }
 
@@ -72,14 +78,16 @@ public class PlayerController : MonoBehaviour
         // jump
 
         bool isGrounded = characterController.isGrounded;
+        float stamina = StaminaController.Instance.playerStamina;
         //float testF = 1f;
         if (isGrounded && jumpVelocity.y < 0)
         {
             jumpVelocity.y = -1f; // small downward force to stick to ground
             //testF = 1f;
         }
-        if (Input.GetKeyDown(KeyCode.Space)&& isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space)&& isGrounded &&stamina >22 )
         {
+            StaminaController.Instance.StaminaJump();
             isGrounded = false;
             animator.SetBool("isJumping", true);
             jumpVelocity.y = 4f; // set jump velocity
@@ -89,8 +97,9 @@ public class PlayerController : MonoBehaviour
 
         //sprint 
         isSprinting = false;
-        if (Input.GetKey(KeyCode.LeftShift) && sprintConstraints(horizontalAxis,verticalAxis)&&isGrounded)
+        if (Input.GetKey(KeyCode.LeftShift) && sprintConstraints(horizontalAxis,verticalAxis)&&isGrounded&& stamina>2)
         {
+            StaminaController.Instance.Sprinting();
             //newMovement = newMovement * 2f;
             runSpeed = sprintSpeed;
             isSprinting = true;
@@ -142,6 +151,11 @@ public class PlayerController : MonoBehaviour
         if (!isSprinting && !isRolling)
         {
             runSpeed = 6f;
+        }
+        if (!isSprinting && isGrounded)
+        {
+            //StaminaController.Instance.UpdateStamina();
+
         }
 
     }

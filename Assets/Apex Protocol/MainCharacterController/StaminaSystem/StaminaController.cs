@@ -1,47 +1,73 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.Design.Serialization;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class StaminaController : MonoBehaviour
 {
+
+    public static StaminaController Instance;
     public float playerStamina = 100.00f;
     [SerializeField] private float maxStamina = 100.00f;
     [SerializeField] private float jumpCost = 10;
     [HideInInspector] public bool hasRegenerated = true;
     [HideInInspector] public bool WeAreSprinting = false;
 
-    [Range(0, 50)][SerializeField] private float staminaDrain = 0.5f;
-    [Range(0, 50)][SerializeField] private float staminaRegen = 0.5f;
+    [Range(0, 50)][SerializeField] private float staminaDrain = 5f;
+    [Range(0, 50)][SerializeField] private float staminaRegen = 5f;
 
     [SerializeField] private int slowedRunSpeed = 4;
     [SerializeField] private int normalRunSpeed = 8;
 
     [SerializeField] private Image staminaProgressUI = null;
     [SerializeField] private CanvasGroup sliderCanvasGroup = null;
-
+    float regenTimer;
+    bool beginRegen;
+    bool allowRegen = true;
     private PlayerController playerController;
 
     private void Start()
     {
+
+        Instance = this;
         playerController = GetComponent<PlayerController>();
+        regenTimer = 2f;
+        allowRegen = true;
     }
 
     private void Update()
     {
-        if (!WeAreSprinting)
-        {
-            if(playerStamina <= maxStamina - 0.01)
+        if (!PlayerController.Instance.isSprinting)
+        {   
+            // if stamina is not full
+            if (playerStamina <= maxStamina - 0.1 )
             {
-                playerStamina += staminaRegen * Time.deltaTime;
-                UpdateStamina(1);
+                if(playerStamina < 2)
+                {
+                    allowRegen = false;
+                    regenTimer -= Time.deltaTime;
+                    if (regenTimer < 0 )
+                    {
+                    regenTimer = 2f;
+                    allowRegen = true;
+                    }
+                }
 
-                if(playerStamina >= maxStamina)
+                if (allowRegen)
+                {
+                    playerStamina += staminaRegen * Time.deltaTime;
+                    UpdateStamina(1);
+                }
+                // if stamina full remove the bar 
+                if (playerStamina >= maxStamina)
                 {
                     sliderCanvasGroup.alpha = 0;
                     hasRegenerated = true;
                 }
             }
+           
         }
     }
 
@@ -85,5 +111,9 @@ public class StaminaController : MonoBehaviour
         }
 
 
+    }
+    IEnumerator RegenDelay()
+    {
+        yield return new WaitForSeconds(1f);
     }
 }
