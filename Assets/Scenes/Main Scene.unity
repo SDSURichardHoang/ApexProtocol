@@ -330,7 +330,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
+  m_Mesh: {fileID: 436017799}
 --- !u!33 &927532510
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -544,6 +544,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449201348038031334, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: maxStamina
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449201348038031334, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: staminaDrain
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449201348038031334, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: staminaRegen
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8449201348038031334, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: playerStamina
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 8582845750420925608, guid: 799ff1729e8f361419473affd49be100,
         type: 3}

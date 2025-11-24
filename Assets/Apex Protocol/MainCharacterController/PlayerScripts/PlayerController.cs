@@ -23,10 +23,12 @@ public class PlayerController : MonoBehaviour
     public float drag = 0.27f;
 
     public Vector3 jumpVelocity;
+    float testF = 1f;
     private float sprintBoost;
     public bool isSprinting = false;
     bool isRolling = false;
     float rollTimer;
+    float fallTimer;
     bool beginRoll;
 
     public float gravityConst = -9.81F;
@@ -48,6 +50,7 @@ public class PlayerController : MonoBehaviour
         Instance = this;
         playerinput = GetComponent<PlayerKeyboard>();
         rollTimer = 1.2f;
+        fallTimer = .75f;
         staminaController = GetComponent<StaminaController>();
         
     }
@@ -79,19 +82,34 @@ public class PlayerController : MonoBehaviour
 
         bool isGrounded = characterController.isGrounded;
         float stamina = StaminaController.Instance.playerStamina;
-        //float testF = 1f;
         if (isGrounded && jumpVelocity.y < 0)
         {
             jumpVelocity.y = -1f; // small downward force to stick to ground
             //testF = 1f;
         }
-        if (Input.GetKeyDown(KeyCode.Space)&& isGrounded &&stamina >22 )
+
+        if (Input.GetKeyDown(KeyCode.Space)&& isGrounded &&stamina > 25)
         {
             StaminaController.Instance.StaminaJump();
             isGrounded = false;
-            animator.SetBool("isJumping", true);
-            jumpVelocity.y = 4f; // set jump velocity
-       //     testF = 4f;
+            if (isSprinting)
+            {
+                Debug.Log("Sprint Jump");
+                //animator 
+                jumpVelocity.y = 6f;
+                testF = 1.75f;
+                animator.SetBool("sprintJumping", true);
+            }
+            else
+            {
+                animator.SetBool("isJumping", true);
+                jumpVelocity.y = 4.5f; // set jump velocity
+                testF = 1.25f;
+            }
+        }
+        if (isGrounded)
+        {
+            testF = 1f;
         }
 
 
@@ -110,12 +128,6 @@ public class PlayerController : MonoBehaviour
         
         
         animator.SetBool("isSprinting", isSprinting);
-
-
-
-
- 
-
 
         //roll
         if (isRolling)
@@ -137,25 +149,36 @@ public class PlayerController : MonoBehaviour
 
         }
 
+        // falling 
+        if (!isGrounded)
+        {
+            fallTimer -= Time.deltaTime;
+            if (fallTimer < 0)
+            {
+                Debug.Log("fall");
+                animator.SetBool("isFalling", true);
+                animator.SetBool("sprintJumping", false);
+                fallTimer = .75f;
+            }
+        }
         //gravity
         jumpVelocity.y += gravityConst * Time.deltaTime;
 
         Vector3 finalMovement = newMovement + new Vector3(0f, jumpVelocity.y, 0f);
-        //finalMovement = finalMovement * testF;
+        finalMovement.x *= testF;
+        finalMovement.z *= testF;
         characterController.Move((finalMovement * Time.deltaTime));
         if (isGrounded)
         {
             animator.SetBool("isJumping",false);
+            animator.SetBool("sprintJumping",false);
+            Debug.Log("isgrounded");
+                animator.SetBool("isFalling", false);
         }
 
         if (!isSprinting && !isRolling)
         {
             runSpeed = 6f;
-        }
-        if (!isSprinting && isGrounded)
-        {
-            //StaminaController.Instance.UpdateStamina();
-
         }
 
     }
