@@ -814,12 +814,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ce0ade1cdfd4b649aac5acf001eff7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStamina: 100
-  maxStamina: 100
+  playerStamina: 250
+  maxStamina: 250
   jumpCost: 25
   hasRegenerated: 1
   WeAreSprinting: 0
-  staminaDrain: 25
+  staminaDrain: 35
   staminaRegen: 15
   slowedRunSpeed: 4
   normalRunSpeed: 8

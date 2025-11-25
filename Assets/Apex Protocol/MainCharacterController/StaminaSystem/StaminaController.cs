@@ -44,7 +44,8 @@ public class StaminaController : MonoBehaviour
             // if stamina is not full
             if (playerStamina <= maxStamina - 0.1 )
             {
-                if(playerStamina <0.1)
+                // if stamina is empty
+                if(playerStamina <0.2)
                 {
                     allowRegen = false;
                     regenTimer -= Time.deltaTime;
@@ -57,6 +58,7 @@ public class StaminaController : MonoBehaviour
 
                 if (allowRegen) 
                 {
+
                     playerStamina += staminaRegen * Time.deltaTime;
                     UpdateStamina(1);
                 }
