@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CharacterController characterController;
     [SerializeField] private Camera playerCamera;
     [SerializeField] public Animator animator;
+    public Transform spineTransform;
     [HideInInspector] public StaminaController staminaController;
 
 
@@ -187,6 +188,12 @@ public class PlayerController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0f, playerrotation.x, 0f);
 
         playerCamera.transform.rotation = Quaternion.Euler(camerarotation.y, camerarotation.x, 0f);
+
+        if (GunSystem.Instance.isAiming && spineTransform != null)
+        {
+            float pitchRotation = -camerarotation.y * 0.8f; // Adjust multiplier as needed
+            spineTransform.localRotation = Quaternion.Euler(pitchRotation, 0f, 0f);
+        }
     }
 
     public bool sprintConstraints(float x, float y)

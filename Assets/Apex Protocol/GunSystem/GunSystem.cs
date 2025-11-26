@@ -10,7 +10,10 @@ using static UnityEngine.Rendering.DebugUI.Table;
 
 public class GunSystem : MonoBehaviour
 {
+    public static GunSystem Instance;
     public Animator animator;   
+    public AudioSource audioSource;
+    public AudioClip pistolShotSound;
 
     public float timeBetweenShooting;
     public float spread;
@@ -43,14 +46,16 @@ public class GunSystem : MonoBehaviour
     private Quaternion aimedInWeaponRotation;
     private Quaternion defaultWeaponRotation;
     public GameObject weaponBarrel;
+    public bool isAiming;
 
 
     private void Awake()
     {
-        defaultWeaponRotation = weaponEquipped.transform.localRotation;
+        Instance = this;
         bulletsLeft = magazineSize;
         readytoShoot = true;
-        aimedInWeaponRotation = Quaternion.Euler(-46.3f, -108.8f, -58.8f);
+        aimedInWeaponRotation = Quaternion.Euler(-141.3f, -301.8f, -224.8f);
+        defaultWeaponRotation = Quaternion.Euler(-44.3f, -168f, -298.8f);
     }
     private void Update()
     {
@@ -88,25 +93,32 @@ public class GunSystem : MonoBehaviour
         {
             bulletsShot = bulletsPerTap;
             Invoke("aimIn",0f);
-            Invoke("Shoot", 0.2f);
+            Invoke("Shoot", 0.25f);
 
         }
 
-
+        
         vCam.m_Lens.FieldOfView = 72f;
-        animator.SetBool("isAiming", false);
+        animator.SetBool("isAiming", isAiming);
         weaponEquipped.transform.localRotation = defaultWeaponRotation;
         if (Input.GetKey(KeyCode.Mouse1))
         {
+            isAiming = true;
             aimIn();
+        }
+        else
+        {
+
+            isAiming = false;
         }
         
     }
     private void aimIn()
     {
+        isAiming = true;
         weaponEquipped.transform.localRotation= aimedInWeaponRotation;
         vCam.m_Lens.FieldOfView = 45f;
-        animator.SetBool("isAiming", true);
+        animator.SetBool("isAiming", isAiming);
     }
 
     private void Reload()
@@ -138,7 +150,6 @@ public class GunSystem : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit RayHit, range))
         {
-            Debug.Log(RayHit.transform.position);
            // if (RayHit.collider.CompareTag("Enemy"))
             {
 
@@ -155,6 +166,7 @@ public class GunSystem : MonoBehaviour
         Quaternion rotationBullet = Quaternion.LookRotation(RayHit.normal * -1f);
         Instantiate(bulletHoleGraphic, RayHit.point+RayHit.normal * 0.01f, rotationBullet);
         Instantiate(muzzleFlash, weaponBarrel.transform.position, Quaternion.identity);
+        audioSource.PlayOneShot(pistolShotSound,1f);
 
         bulletsLeft--;
         bulletsShot--;
