@@ -18,5 +18,9 @@ General goals/tasks for each person:
 - Chris Nguyen: Background and level formation, as well as implementations of main menu and game over screens + creation of first level scene
 
 
-https://github.com/user-attachments/assets/dc9fb662-3dca-4f42-8736-cdc498ba66a6
+
+
+
+
+https://github.com/user-attachments/assets/3ddeea20-10f9-466a-9f5d-c29762726ddf
 
