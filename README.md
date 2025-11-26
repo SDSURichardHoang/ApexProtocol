@@ -16,3 +16,7 @@ General goals/tasks for each person:
 - Isaac Acosta: Creation of Implementing all the animations for the movement and prefab creation of the Health and Stamina Bar to be full functional during playtest + creation of first gun prefab
 - Grant Becker: Lighting/Background work + Implementation of enemies movement, animation, and overall creation of enemy
 - Chris Nguyen: Background and level formation, as well as implementations of main menu and game over screens + creation of first level scene
+
+
+https://github.com/user-attachments/assets/dc9fb662-3dca-4f42-8736-cdc498ba66a6
+
