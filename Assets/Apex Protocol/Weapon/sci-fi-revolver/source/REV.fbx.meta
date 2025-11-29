@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 46df32d95ff78b343a4d9fa4f56043f9
+guid: 0307aa6d637d59a4999632ac0e168d1f
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,25 +7,15 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Bullet
-    second: {fileID: 2100000, guid: 0dd37127582f91a40ad96d7fd5e93d15, type: 2}
+      name: barrel
+    second: {fileID: 2100000, guid: a4f98c1d081429c4ca261fec19913869, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Magazine
-    second: {fileID: 2100000, guid: a01c59f7c552b8a4cbcbae2fd8729760, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Pistol
-    second: {fileID: 2100000, guid: c0a9834899d40b84e82fa56d79b6d131, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Pistole
-    second: {fileID: 2100000, guid: 46261462f4742434d98e46fa778697e0, type: 2}
+      name: body
+    second: {fileID: 2100000, guid: 56b3be28c166ed34ea78bc946cf73604, type: 2}
   materials:
-    materialImportMode: 1
+    materialImportMode: 2
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -65,7 +55,7 @@ ModelImporter:
     importBlendShapes: 1
     importCameras: 1
     importLights: 1
-    nodeNameCollisionStrategy: 0
+    nodeNameCollisionStrategy: 1
     fileIdsGeneration: 2
     swapUVChannels: 0
     generateSecondaryUV: 0
@@ -120,9 +110,9 @@ ModelImporter:
   animationType: 2
   humanoidOversampling: 1
   avatarSetup: 0
-  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
-  importBlendShapeDeformPercent: 0
-  remapMaterialsIfMaterialImportModeIsNone: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
   additionalBone: 0
   userData: 
   assetBundleName: 

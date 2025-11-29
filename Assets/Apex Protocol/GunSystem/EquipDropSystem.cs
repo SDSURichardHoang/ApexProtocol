@@ -4,51 +4,35 @@ using UnityEngine;
 
 public class EquipDropSystem : MonoBehaviour
 {
+    public static EquipDropSystem Instance;
     public GunSystem gunScript;
-    public Rigidbody RigB;
-    public BoxCollider Collider;
     public Transform player;
     public Transform gunContainer;
     public Transform ThirdPersonCam;
+    public AudioClip fireSound;
 
-    public float EquipRange;
-    public float DropForceF;
-    public float DropForceUp;
+    private float EquipRange = 1f;
 
 
-    public bool Equip;
+    public bool isEquipped= false;
     public static bool slots;
 
 
     private void Start()
     {
-        if (Equip)
-        {
-            gunScript.enabled = true;
-            RigB.isKinematic = true;
-            Collider.isTrigger = true;
-            slots = true;
-        }
-
-        if (!Equip)
-        {
-            gunScript.enabled = false;
-            RigB.isKinematic = false;
-            Collider.isTrigger = false;
-        }
-       
+        Instance = this;
     }
 
     private void Update()
     {
         Vector3 distanceToPlayer = player.position - transform.position;
-
-        if (!Equip && distanceToPlayer.magnitude <= EquipRange && Input.GetKeyDown(KeyCode.E) && !slots)
+        if (distanceToPlayer.magnitude <= EquipRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && !GunSystem.Instance.hasWeapon)
         {
+
             PickUp();
         }
 
-        if(Equip && Input.GetKeyDown(KeyCode.Q))
+        if(isEquipped && Input.GetKeyDown(KeyCode.Q))
         {
             Drop();
         }
@@ -57,40 +41,39 @@ public class EquipDropSystem : MonoBehaviour
 
     private void PickUp()
     {
-        Equip = true;
-        slots = true;
-
+        isEquipped = true;
+        GunSystem.Instance.hasWeapon = true;
         transform.SetParent(gunContainer);
-        transform.localPosition = Vector3.zero;
-        transform.localRotation = Quaternion.Euler(Vector3.zero);
-        transform.localScale = Vector3.one;
+        GunSystem.Instance.weaponEquipped = transform;
+        Transform barrel = transform.Find("Barrel");
+        GunSystem.Instance.weaponBarrel = barrel.gameObject;
+        Debug.Log(transform.tag);
+        switch (transform.tag)
+        {
+            case "Pistol":
+                transform.localPosition =new Vector3(-0.017f, 0.07f, -0.044f);
+                //transform.localRotation= Quaternion.Euler(-44.3f, -168f, -298.8f);
+                transform.localScale = new Vector3(0.4f,0.4f,0.4f);
+                Debug.Log("pistol");
+                break;
+            case "Revolver":
+                transform.localPosition =new Vector3(-0.058f, 0.114f, -0.104f);
+                //transform.localRotation= Quaternion.Euler(-44.3f, -168f, -298.8f);
+                transform.localScale = new Vector3(15f,15f,15f);
+                Debug.Log("revolver");
+                break;
 
-        RigB.isKinematic = true;
-        Collider.isTrigger = true;
+              
+        }
+        //transform.localPosition = Vector3.zero;
+        //transform.localRotation = Quaternion.Euler(Vector3.zero);
+        //transform.localScale = new Vector3(0.3f,0.3f,0.3f);
 
-        gunScript.enabled = true;
+
     }
 
     private void Drop()
     {
-        Equip = false;
-        slots = false;
-
-        transform.SetParent(null);
-
-        RigB.isKinematic = false;
-        Collider.isTrigger = false;
-
-        RigB.velocity = player.GetComponent<Rigidbody>().velocity;
-
-        RigB.AddForce(ThirdPersonCam.forward * DropForceF, ForceMode.Impulse);
-        RigB.AddForce(ThirdPersonCam.up * DropForceUp, ForceMode.Impulse);
-
-        float random = Random.Range(-1f, 1f);
-
-        RigB.AddTorque(new Vector3(random, random, random) * 10);
-
-        gunScript.enabled = false;
 
 
     }

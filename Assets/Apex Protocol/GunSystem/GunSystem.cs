@@ -42,11 +42,10 @@ public class GunSystem : MonoBehaviour
     public RaycastHit RayHit;
     public LayerMask Enemy;
     public CinemachineVirtualCamera vCam;
-    public GameObject weaponEquipped;
-    private Quaternion aimedInWeaponRotation;
-    private Quaternion defaultWeaponRotation;
+    public Transform weaponEquipped;
     public GameObject weaponBarrel;
     public bool isAiming;
+    public bool hasWeapon =false;
 
 
     private void Awake()
@@ -54,13 +53,14 @@ public class GunSystem : MonoBehaviour
         Instance = this;
         bulletsLeft = magazineSize;
         readytoShoot = true;
-        aimedInWeaponRotation = Quaternion.Euler(-141.3f, -301.8f, -224.8f);
-        defaultWeaponRotation = Quaternion.Euler(-44.3f, -168f, -298.8f);
     }
     private void Update()
     {
 
-        MyInput();
+        if (weaponEquipped!=null)
+        {
+            MyInput();
+        }
 
         text.SetText(bulletsLeft + " / " + magazineSize);
     }
@@ -92,15 +92,17 @@ public class GunSystem : MonoBehaviour
         if(readytoShoot && shooting && !reloading && bulletsLeft > 0)
         {
             bulletsShot = bulletsPerTap;
-            Invoke("aimIn",0f);
-            Invoke("Shoot", 0.25f);
+            //Invoke("aimIn",0f);
+            //Invoke("Shoot", 0.25f);
+            aimIn();
+            Shoot();
 
         }
 
         
         vCam.m_Lens.FieldOfView = 72f;
         animator.SetBool("isAiming", isAiming);
-        weaponEquipped.transform.localRotation = defaultWeaponRotation;
+        setTransform("idle");
         if (Input.GetKey(KeyCode.Mouse1))
         {
             isAiming = true;
@@ -116,8 +118,8 @@ public class GunSystem : MonoBehaviour
     private void aimIn()
     {
         isAiming = true;
-        weaponEquipped.transform.localRotation= aimedInWeaponRotation;
-        vCam.m_Lens.FieldOfView = 45f;
+        setTransform("aiming");
+        vCam.m_Lens.FieldOfView = 35f;
         animator.SetBool("isAiming", isAiming);
     }
 
@@ -136,6 +138,8 @@ public class GunSystem : MonoBehaviour
 
     private void Shoot()
     {
+        bulletsLeft--;
+        bulletsShot--;
         readytoShoot = false;
 
 
@@ -164,12 +168,14 @@ public class GunSystem : MonoBehaviour
         }
 
         Quaternion rotationBullet = Quaternion.LookRotation(RayHit.normal * -1f);
-        Instantiate(bulletHoleGraphic, RayHit.point+RayHit.normal * 0.01f, rotationBullet);
-        Instantiate(muzzleFlash, weaponBarrel.transform.position, Quaternion.identity);
-        audioSource.PlayOneShot(pistolShotSound,1f);
+        var bulletHoleClone = Instantiate(bulletHoleGraphic, RayHit.point+RayHit.normal * 0.01f, rotationBullet);
+        var muzzleFlashClone = Instantiate(muzzleFlash, weaponBarrel.transform.position, Quaternion.identity);
+        AudioClip fireSoundAudio = weaponEquipped.GetComponent<EquipDropSystem>().fireSound;
+        audioSource.PlayOneShot(fireSoundAudio,0.5f);
+        //Delete bullet hole and muzzle flash objects after 10 and 2 seconds respectively 
+        Destroy(bulletHoleClone, 10f);
+        Destroy(muzzleFlashClone, 2f);
 
-        bulletsLeft--;
-        bulletsShot--;
 
         Invoke("ResetShot", timeBetweenShooting);
 
@@ -184,5 +190,33 @@ public class GunSystem : MonoBehaviour
     {
         readytoShoot = true;
     }
-  
+    private void setTransform(string IdleOrAiming)
+    {
+        
+        switch (weaponEquipped.tag)
+        {
+            case "Pistol":
+                if (IdleOrAiming == "idle")
+                {
+                    weaponEquipped.localRotation =Quaternion.Euler(-44.1f, -168.2f, -298.5f);
+                }else if (IdleOrAiming == "aiming")
+                {
+                    weaponEquipped.localRotation= Quaternion.Euler(-141.3f, -301.8f, -224.8f);
+                }
+
+                break;
+
+            case "Revolver":
+                if (IdleOrAiming == "idle")
+                {
+                    weaponEquipped.localRotation = Quaternion.Euler(168.1f, -20.4f, -120.4f);
+                }
+                else if(IdleOrAiming == "aiming")
+                {
+                    weaponEquipped.localRotation = Quaternion.Euler(206.5f, -52.7f, -141.2f);
+                }
+                break;
+
+        }
+    }
 }

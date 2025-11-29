@@ -696,6 +696,16 @@ PrefabInstance:
       objectReference: {fileID: 4573102431100732405}
     - target: {fileID: 2849749045583521849, guid: c7008bf3402be8343915d68339334011,
         type: 3}
+      propertyPath: weaponBarrel
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2849749045583521849, guid: c7008bf3402be8343915d68339334011,
+        type: 3}
+      propertyPath: weaponEquipped
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2849749045583521849, guid: c7008bf3402be8343915d68339334011,
+        type: 3}
       propertyPath: bulletHoleGraphic
       value: 
       objectReference: {fileID: 7777043069355777495, guid: 2d51c59fdb4600a4195176c76d386d7a,
@@ -988,6 +998,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 3943424679454042473, guid: c7008bf3402be8343915d68339334011, type: 3}
+    - {fileID: 6352255418339363468, guid: c7008bf3402be8343915d68339334011, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6736199051378025497, guid: c7008bf3402be8343915d68339334011,
         type: 3}
