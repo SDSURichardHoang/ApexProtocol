@@ -12,11 +12,13 @@ public class EquipDropSystem : MonoBehaviour
     public Transform ThirdPersonCam;
     public AudioClip fireSound;
     public Sprite uiImage;
+    public GameObject popup;
 
-    private float EquipRange = 1f;
+    private float EquipRange = 1.75f;
 
 
     public bool isEquipped= false;
+    private bool showPopup;
     public static bool slots;
 
 
@@ -40,6 +42,20 @@ public class EquipDropSystem : MonoBehaviour
         {
             Drop();
         }
+        if (!isEquipped && distanceToPlayer.magnitude<=EquipRange)
+        {
+            //spin and show popup
+            popup.SetActive(true);
+            popup.transform.rotation = player.rotation;
+
+
+
+        }
+        else
+        {
+            
+            popup.SetActive(false); 
+        }
            
     }
 
@@ -47,7 +63,7 @@ public class EquipDropSystem : MonoBehaviour
     {
 
         isEquipped = true;
-
+        popup.SetActive(false);
         GunSystem.Instance.hasWeapon = true;
         transform.SetParent(gunContainer);
         GunSystem.Instance.weaponEquipped = transform;
