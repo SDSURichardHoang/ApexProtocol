@@ -48,6 +48,7 @@ public class GunSystem : MonoBehaviour
     public GameObject weaponBarrel;
     public bool isAiming;
     public bool hasWeapon =false;
+    weaponObject currWeapon;
 
 
     private void Awake()
@@ -61,9 +62,12 @@ public class GunSystem : MonoBehaviour
 
         if (weaponEquipped!=null)
         {
+            //weaponObject currWeapon;
+                currWeapon= weaponEquipped.GetComponent<weaponObject>();
             MyInput();
         }
-            AmmoText.SetText(bulletsLeft + " / " + magazineSize);
+
+        ammoText();
 
     }
 
@@ -128,7 +132,9 @@ public class GunSystem : MonoBehaviour
     private void Reload()
     {
         reloading = true;
-        Invoke("ReloadFinished", reloadTime);
+        //audioSource.PlayOneShot(weaponEquipped.GetComponent<weaponObject>().reloadSound);
+        audioSource.PlayOneShot(currWeapon.reloadSound);
+        Invoke("ReloadFinished", currWeapon.reloadTime);
     }
 
     private void ReloadFinished()
@@ -172,7 +178,7 @@ public class GunSystem : MonoBehaviour
         Quaternion rotationBullet = Quaternion.LookRotation(RayHit.normal * -1f);
         var bulletHoleClone = Instantiate(bulletHoleGraphic, RayHit.point+RayHit.normal * 0.01f, rotationBullet);
         var muzzleFlashClone = Instantiate(muzzleFlash, weaponBarrel.transform.position, Quaternion.identity);
-        AudioClip fireSoundAudio = weaponEquipped.GetComponent<EquipDropSystem>().fireSound;
+        AudioClip fireSoundAudio = weaponEquipped.GetComponent<weaponObject>().fireSound;
         audioSource.PlayOneShot(fireSoundAudio,0.5f);
         //Delete bullet hole and muzzle flash objects after 10 and 2 seconds respectively 
         Destroy(bulletHoleClone, 10f);
@@ -219,6 +225,20 @@ public class GunSystem : MonoBehaviour
                 }
                 break;
 
+        }
+    }
+    private void ammoText()
+    {
+        if (!reloading)
+        {
+            AmmoText.fontSize = 36;
+            AmmoText.SetText(bulletsLeft + " / " + magazineSize);
+        }
+        else
+        {
+
+            AmmoText.fontSize = 24;
+            AmmoText.SetText("Reloading...");
         }
     }
 }

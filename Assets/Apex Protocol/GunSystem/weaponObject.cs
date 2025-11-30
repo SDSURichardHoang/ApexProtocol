@@ -3,16 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EquipDropSystem : MonoBehaviour
+public class weaponObject : MonoBehaviour
 {
-    public static EquipDropSystem Instance;
+    public static weaponObject Instance;
     public GunSystem gunScript;
     public Transform player;
     public Transform gunContainer;
     public Transform ThirdPersonCam;
     public AudioClip fireSound;
+    public AudioClip reloadSound;
     public Sprite uiImage;
     public GameObject popup;
+
+    public float reloadTime;
 
     private float EquipRange = 1.75f;
 
