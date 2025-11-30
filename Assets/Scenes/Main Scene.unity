@@ -263,6 +263,7 @@ MonoBehaviour:
   gunContainer: {fileID: 993519532}
   ThirdPersonCam: {fileID: 844902091}
   fireSound: {fileID: 8300000, guid: 6e026ca8b471f4b449e066642005161a, type: 3}
+  uiImage: {fileID: 21300000, guid: 002e22588fce3b14bba536217629dfe9, type: 3}
   isEquipped: 0
 --- !u!43 &436017799
 Mesh:
@@ -657,6 +658,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &966086468 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2069953749369269250, guid: 799ff1729e8f361419473affd49be100,
+    type: 3}
+  m_PrefabInstance: {fileID: 2376976338970927398}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &993519532 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8485807436611608707, guid: 799ff1729e8f361419473affd49be100,
@@ -686,6 +699,7 @@ MonoBehaviour:
   gunContainer: {fileID: 993519532}
   ThirdPersonCam: {fileID: 844902091}
   fireSound: {fileID: 8300000, guid: e70438484194e844f9d8c5c3f442ecdc, type: 3}
+  uiImage: {fileID: 21300000, guid: f5664c76aaefd314ea8367995bf3fc87, type: 3}
   isEquipped: 0
 --- !u!1001 &1583265105
 PrefabInstance:
@@ -788,6 +802,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 155914394}
   m_SourcePrefab: {fileID: 100100000, guid: 46df32d95ff78b343a4d9fa4f56043f9, type: 3}
+--- !u!1 &2007942603 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3951772296752830917, guid: 799ff1729e8f361419473affd49be100,
+    type: 3}
+  m_PrefabInstance: {fileID: 2376976338970927398}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2028696520
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -888,10 +908,87 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2069953749369269250, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: feb7c583260ca8c46b1a251d835896b4,
+        type: 2}
+    - target: {fileID: 2069953749369269250, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 4807719562067308958, guid: feb7c583260ca8c46b1a251d835896b4,
+        type: 2}
+    - target: {fileID: 2069953749369269250, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664215432712163565, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664215432712163565, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664215432712163565, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664215432712163565, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -331.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664215432712163565, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -113.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4212823495591229752, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: gunUI
+      value: 
+      objectReference: {fileID: 2007942603}
+    - target: {fileID: 4212823495591229752, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: AmmoText
+      value: 
+      objectReference: {fileID: 966086468}
     - target: {fileID: 4212823495591229752, guid: 799ff1729e8f361419473affd49be100,
         type: 3}
       propertyPath: weaponBarrel
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4687114463574449777, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4687114463574449777, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0.8666667
+      objectReference: {fileID: 0}
+    - target: {fileID: 4687114463574449777, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4687114463574449777, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4687114463574449777, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5247860773490692650, guid: 799ff1729e8f361419473affd49be100,
         type: 3}
@@ -907,6 +1004,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353623332239712872, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353623332239712872, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353623332239712872, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 117.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 7353623332239712872, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 27.4
       objectReference: {fileID: 0}
     - target: {fileID: 8582845750420925608, guid: 799ff1729e8f361419473affd49be100,
         type: 3}

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EquipDropSystem : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class EquipDropSystem : MonoBehaviour
     public Transform gunContainer;
     public Transform ThirdPersonCam;
     public AudioClip fireSound;
+    public Sprite uiImage;
 
     private float EquipRange = 1f;
 
@@ -21,6 +23,8 @@ public class EquipDropSystem : MonoBehaviour
     private void Start()
     {
         Instance = this;
+        GunSystem.Instance.gunUI.SetActive(false);
+        GunSystem.Instance.AmmoText.enabled = false;
     }
 
     private void Update()
@@ -41,12 +45,17 @@ public class EquipDropSystem : MonoBehaviour
 
     private void PickUp()
     {
+
         isEquipped = true;
+
         GunSystem.Instance.hasWeapon = true;
         transform.SetParent(gunContainer);
         GunSystem.Instance.weaponEquipped = transform;
         Transform barrel = transform.Find("Barrel");
         GunSystem.Instance.weaponBarrel = barrel.gameObject;
+        GunSystem.Instance.AmmoText.enabled = true;
+        GunSystem.Instance.gunUI.SetActive(true);
+        GunSystem.Instance.gunUI.GetComponent<Image>().sprite = uiImage;
         Debug.Log(transform.tag);
         switch (transform.tag)
         {

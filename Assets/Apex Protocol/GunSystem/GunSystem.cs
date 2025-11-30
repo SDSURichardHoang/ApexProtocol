@@ -37,7 +37,8 @@ public class GunSystem : MonoBehaviour
     public GameObject bulletHoleGraphic;
     public Camera GunCamera;
     public Transform attackPoint;
-    public TextMeshProUGUI text;
+    public TextMeshProUGUI AmmoText;
+    public GameObject gunUI;
 
     public RaycastHit RayHit;
     public LayerMask Enemy;
@@ -62,7 +63,8 @@ public class GunSystem : MonoBehaviour
             MyInput();
         }
 
-        text.SetText(bulletsLeft + " / " + magazineSize);
+        AmmoText.SetText(bulletsLeft + " / " + magazineSize);
+
     }
 
     private void MyInput()
