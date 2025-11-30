@@ -19,6 +19,7 @@ public class EquipDropSystem : MonoBehaviour
 
     public bool isEquipped= false;
     private bool showPopup;
+    private bool hasWeapon;
     public static bool slots;
 
 
@@ -27,6 +28,7 @@ public class EquipDropSystem : MonoBehaviour
         Instance = this;
         GunSystem.Instance.gunUI.SetActive(false);
         GunSystem.Instance.AmmoText.enabled = false;
+        GunSystem.Instance.dropBind.enabled = false;
     }
 
     private void Update()
@@ -61,17 +63,7 @@ public class EquipDropSystem : MonoBehaviour
 
     private void PickUp()
     {
-
-        isEquipped = true;
-        popup.SetActive(false);
-        GunSystem.Instance.hasWeapon = true;
-        transform.SetParent(gunContainer);
-        GunSystem.Instance.weaponEquipped = transform;
-        Transform barrel = transform.Find("Barrel");
-        GunSystem.Instance.weaponBarrel = barrel.gameObject;
-        GunSystem.Instance.AmmoText.enabled = true;
-        GunSystem.Instance.gunUI.SetActive(true);
-        GunSystem.Instance.gunUI.GetComponent<Image>().sprite = uiImage;
+        setWeaponValues(true);
         Debug.Log(transform.tag);
         switch (transform.tag)
         {
@@ -99,7 +91,37 @@ public class EquipDropSystem : MonoBehaviour
 
     private void Drop()
     {
+        transform.rotation = Quaternion.Euler(Vector3.zero);
+        setWeaponValues(false);
+        
 
+    }
+    private void setWeaponValues(bool hasWeapon) 
+    {
+        
+        isEquipped = hasWeapon;
+        popup.SetActive(!hasWeapon);
+        GunSystem.Instance.hasWeapon = hasWeapon;
+        GunSystem.Instance.AmmoText.enabled = hasWeapon;
+        GunSystem.Instance.dropBind.enabled = hasWeapon;
+        GunSystem.Instance.gunUI.SetActive(hasWeapon);
+        if (hasWeapon)
+        {
+            GunSystem.Instance.weaponEquipped = transform;
+            transform.SetParent(gunContainer);
+            Transform barrel = transform.Find("Barrel");
+            GunSystem.Instance.weaponBarrel = barrel.gameObject;
+            GunSystem.Instance.gunUI.GetComponent<Image>().sprite = uiImage;
+        }
+        else
+        {
+
+            GunSystem.Instance.weaponEquipped = null;
+            transform.SetParent(null, true);
+            Transform barrel = null;
+            GunSystem.Instance.weaponBarrel = null;
+            GunSystem.Instance.gunUI.GetComponent<Image>().sprite = null;
+        }
 
     }
 }

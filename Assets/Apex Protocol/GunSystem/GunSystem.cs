@@ -38,6 +38,7 @@ public class GunSystem : MonoBehaviour
     public Camera GunCamera;
     public Transform attackPoint;
     public TextMeshProUGUI AmmoText;
+    public TextMeshProUGUI dropBind;
     public GameObject gunUI;
 
     public RaycastHit RayHit;
@@ -62,8 +63,7 @@ public class GunSystem : MonoBehaviour
         {
             MyInput();
         }
-
-        AmmoText.SetText(bulletsLeft + " / " + magazineSize);
+            AmmoText.SetText(bulletsLeft + " / " + magazineSize);
 
     }
 
