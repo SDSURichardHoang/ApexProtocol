@@ -15,20 +15,6 @@ public class GunSystem : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip pistolShotSound;
 
-    public float timeBetweenShooting;
-    public float spread;
-    public float range;
-    public float reloadTime;
-    public float timeBetweenShots;
-
-
-    public int magazineSize;
-    public int bulletsPerTap;
-    public int damage;
-    public int bulletsLeft;
-    public int bulletsShot;
-
-    public bool allowButtonhold;
     public bool shooting;
     public bool readytoShoot;
     public bool reloading;
@@ -54,7 +40,6 @@ public class GunSystem : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        bulletsLeft = magazineSize;
         readytoShoot = true;
     }
     private void Update()
@@ -62,18 +47,18 @@ public class GunSystem : MonoBehaviour
 
         if (weaponEquipped!=null)
         {
-            //weaponObject currWeapon;
-                currWeapon= weaponEquipped.GetComponent<weaponObject>();
+            currWeapon= weaponEquipped.GetComponent<weaponObject>();
+            ammoText();
             MyInput();
         }
 
-        ammoText();
+
 
     }
 
     private void MyInput()
     {
-        if (allowButtonhold)
+        if (currWeapon.allowButtonhold)
         {
 
             shooting = Input.GetKey(KeyCode.Mouse0);
@@ -88,16 +73,16 @@ public class GunSystem : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown(KeyCode.R) && bulletsLeft < magazineSize && !reloading)
+        if (Input.GetKeyDown(KeyCode.R) && currWeapon.bulletsLeft < currWeapon.magazineSize && !reloading)
         {
             Reload();
         }
 
 
 
-        if(readytoShoot && shooting && !reloading && bulletsLeft > 0)
+        if(readytoShoot && shooting && !reloading && currWeapon.bulletsLeft > 0)
         {
-            bulletsShot = bulletsPerTap;
+            currWeapon.bulletsShot = currWeapon.bulletsPerTap;
             //Invoke("aimIn",0f);
             //Invoke("Shoot", 0.25f);
             aimIn();
@@ -139,20 +124,20 @@ public class GunSystem : MonoBehaviour
 
     private void ReloadFinished()
     {
-        bulletsLeft = magazineSize;
+        currWeapon.bulletsLeft = currWeapon.magazineSize;
         reloading = false;
     }
 
 
     private void Shoot()
     {
-        bulletsLeft--;
-        bulletsShot--;
+        currWeapon.bulletsLeft--;
+        currWeapon.bulletsShot--;
         readytoShoot = false;
 
 
-        float x = Random.Range(-spread, spread);
-        float y = Random.Range(-spread, spread);
+        float x = Random.Range(-currWeapon.spread, currWeapon.spread);
+        float y = Random.Range(-currWeapon.spread, currWeapon.spread);
 
         Vector3 direction = GunCamera.transform.forward;
 
@@ -160,7 +145,7 @@ public class GunSystem : MonoBehaviour
 
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f));
 
-        if (Physics.Raycast(ray, out RaycastHit RayHit, range))
+        if (Physics.Raycast(ray, out RaycastHit RayHit, currWeapon.range))
         {
            // if (RayHit.collider.CompareTag("Enemy"))
             {
@@ -185,11 +170,11 @@ public class GunSystem : MonoBehaviour
         Destroy(muzzleFlashClone, 2f);
 
 
-        Invoke("ResetShot", timeBetweenShooting);
+        Invoke("ResetShot", currWeapon.timeBetweenShooting);
 
-        if(bulletsShot > 0 && bulletsLeft > 0)
+        if(currWeapon.bulletsShot > 0 && currWeapon.bulletsLeft > 0)
         {
-            Invoke("Shoot", timeBetweenShots);
+            Invoke("Shoot", currWeapon.timeBetweenShots);
         }
        
     }
@@ -232,7 +217,7 @@ public class GunSystem : MonoBehaviour
         if (!reloading)
         {
             AmmoText.fontSize = 36;
-            AmmoText.SetText(bulletsLeft + " / " + magazineSize);
+            AmmoText.SetText(currWeapon.bulletsLeft + " / " + currWeapon.magazineSize);
         }
         else
         {

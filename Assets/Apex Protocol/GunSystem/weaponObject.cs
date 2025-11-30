@@ -5,6 +5,19 @@ using UnityEngine.UI;
 
 public class weaponObject : MonoBehaviour
 {
+
+    public float timeBetweenShooting;
+    public float spread;
+    public float range;
+    public float reloadTime;
+    public float timeBetweenShots;
+    public int magazineSize;
+    public int bulletsPerTap;
+    public int damage;
+    public int bulletsLeft;
+    public int bulletsShot;
+    public bool allowButtonhold;
+
     public static weaponObject Instance;
     public GunSystem gunScript;
     public Transform player;
@@ -14,8 +27,6 @@ public class weaponObject : MonoBehaviour
     public AudioClip reloadSound;
     public Sprite uiImage;
     public GameObject popup;
-
-    public float reloadTime;
 
     private float EquipRange = 1.75f;
 
