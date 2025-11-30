@@ -1025,6 +1025,11 @@ PrefabInstance:
       objectReference: {fileID: 2069953749369269250}
     - target: {fileID: 2849749045583521849, guid: c7008bf3402be8343915d68339334011,
         type: 3}
+      propertyPath: dropBind
+      value: 
+      objectReference: {fileID: 1916401418432652404}
+    - target: {fileID: 2849749045583521849, guid: c7008bf3402be8343915d68339334011,
+        type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 4573102431100732405}
@@ -1342,12 +1347,12 @@ PrefabInstance:
     - target: {fileID: 8932874997065446249, guid: c7008bf3402be8343915d68339334011,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 117.81995
+      value: 116.1
       objectReference: {fileID: 0}
     - target: {fileID: 8932874997065446249, guid: c7008bf3402be8343915d68339334011,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 27.400024
+      value: 26.3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

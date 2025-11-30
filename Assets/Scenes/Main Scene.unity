@@ -247,8 +247,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenShooting: 0
-  spread: 0
-  range: 0
+  spread: 0.01
+  range: 50
   reloadTime: 2
   timeBetweenShots: 0
   magazineSize: 12
@@ -464,18 +464,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.108000405, y: 0.3978894, z: 0.7571844}
   m_Center: {x: 0.00000024400657, y: -0.011444631, z: 0.22140796}
---- !u!114 &626062870 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1916401418432652404, guid: 799ff1729e8f361419473affd49be100,
-    type: 3}
-  m_PrefabInstance: {fileID: 2376976338970927398}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &844902091 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8361998365276960771, guid: 799ff1729e8f361419473affd49be100,
@@ -906,8 +894,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenShooting: 0
-  spread: 0
-  range: 0
+  spread: 0.1
+  range: 50
   reloadTime: 3.5
   timeBetweenShots: 0
   magazineSize: 6
@@ -1534,16 +1522,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2069953749369269250, guid: 799ff1729e8f361419473affd49be100,
-        type: 3}
-      propertyPath: m_text
-      value: X/X
-      objectReference: {fileID: 0}
-    - target: {fileID: 4212823495591229752, guid: 799ff1729e8f361419473affd49be100,
-        type: 3}
-      propertyPath: dropBind
-      value: 
-      objectReference: {fileID: 626062870}
     - target: {fileID: 5247860773490692650, guid: 799ff1729e8f361419473affd49be100,
         type: 3}
       propertyPath: m_Name
@@ -1558,16 +1536,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7353623332239712872, guid: 799ff1729e8f361419473affd49be100,
-        type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 116.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7353623332239712872, guid: 799ff1729e8f361419473affd49be100,
-        type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 26.3
       objectReference: {fileID: 0}
     - target: {fileID: 8582845750420925608, guid: 799ff1729e8f361419473affd49be100,
         type: 3}
