@@ -16,6 +16,10 @@ public class EnemyHealth : MonoBehaviour
     void Update()
     {
         EnemyHealthBar.Instance.UpdateHealthBar(currHealth,maxHealth);
+        if (currHealth < 0)
+        {
+            Destroy(gameObject);
+        }
     }
     public void TakeDamage(float damage)
     {
