@@ -167,12 +167,14 @@ public class GunSystem : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit RayHit, currWeapon.range))
         {
-           // if (RayHit.collider.CompareTag("Enemy"))
+
+                Debug.Log(RayHit.collider);
+            if (RayHit.collider.CompareTag("Enemy"))
             {
 
                 //NOT COMPLETE UNTIL FIRST ENEMY SCRIPT IS CREATED
-                //RayHit.collider
-                //.GetComponent<>.TakeDamage(damage);
+                Debug.Log("hit");
+                RayHit.collider.GetComponent<EnemyHealth>().TakeDamage(currWeapon.damage);
 
 
 

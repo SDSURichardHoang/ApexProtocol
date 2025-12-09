@@ -9,6 +9,7 @@ TagManager:
   - Grapple_Gun
   - HealthPack
   - AmmoPack
+  - Enemy
   layers:
   - Default
   - TransparentFX
