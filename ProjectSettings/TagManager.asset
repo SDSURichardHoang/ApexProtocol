@@ -7,6 +7,8 @@ TagManager:
   - Pistol
   - Revolver
   - Grapple_Gun
+  - HealthPack
+  - AmmoPack
   layers:
   - Default
   - TransparentFX
