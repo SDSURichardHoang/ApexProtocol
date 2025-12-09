@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Pistol
   - Revolver
+  - Grapple_Gun
   layers:
   - Default
   - TransparentFX

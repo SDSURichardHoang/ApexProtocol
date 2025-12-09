@@ -4,99 +4,67 @@ using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private LineRenderer GrappleLine;
-    private Vector3 GrapplePoint;
-    public LayerMask whatIsGrappleable;
-    private float maxDistance = 100f;
-    private SpringJoint joint;
-
+    public static GrapplingHook Instance;
+    public bool isGrappling = false;
     public Transform gunTip;
-    public Transform camera;
-    public Transform player;
+    public LayerMask grappleMask;
+    public LineRenderer grappleLine;
+    public float grapplePullSpeed = 40f;
+    public float grappleSwingStrength = 5f;
+    public float grappleStopDistance = 2f;
+    public float grappleMaxRange = 25f;
 
-    void Awake()
+    public Vector3 grapplePoint;
+    public float cooldownTime = 2f;
+    public float cooldownTimer = 0f;
+    public AudioSource audSource;
+    private void Awake()
     {
-        GrappleLine = GetComponent<LineRenderer>();
+         Instance = this;
     }
-
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (cooldownTimer > 0)
+        {
+            cooldownTimer -= Time.deltaTime;
+        }
+        if (cooldownTimer <=0 && Input.GetKey(KeyCode.Mouse0)&& GunSystem.Instance.currWeapon != null && GunSystem.Instance.currWeapon.tag =="Grapple_Gun")
         {
             StartGrapple();
+            cooldownTimer = cooldownTime;
         }
-        else if (Input.GetMouseButtonUp(0))
+
+        if (Input.GetMouseButtonUp(0))
         {
             StopGrapple();
         }
     }
-
-    //Called after Update
-    void LateUpdate()
+    public void StartGrapple()
     {
-        DrawRope();
-    }
-
-    /// <summary>
-    /// Call whenever we want to start a grapple
-    /// </summary>
-    void StartGrapple()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(camera.position, camera.forward, out hit, maxDistance, whatIsGrappleable))
+        audSource.clip = this.GetComponent<weaponObject>().fireSound;
+        audSource.loop = false;
+        GunSystem.Instance.isAiming = true;
+        Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f));
+        if (Physics.Raycast(ray, out RaycastHit hit,grappleMaxRange, grappleMask))
         {
-            GrapplePoint = hit.point;
-            joint = player.gameObject.AddComponent<SpringJoint>();
-            joint.autoConfigureConnectedAnchor = false;
-            joint.connectedAnchor = GrapplePoint;
-
-            float distanceFromPoint = Vector3.Distance(player.position, GrapplePoint);
-
-            //The distance grapple will try to keep from grapple point. 
-            joint.maxDistance = distanceFromPoint * 0.8f;
-            joint.minDistance = distanceFromPoint * 0.25f;
-
-            //Adjust these values to fit your game.
-            joint.spring = 4.5f;
-            joint.damper = 7f;
-            joint.massScale = 4.5f;
-
-            GrappleLine.positionCount = 2;
-            currentGrapplePosition = gunTip.position;
+            audSource.Play();
+            grapplePoint = hit.point;
+            isGrappling = true;
+            PlayerController.Instance.isGrappling = true;
+            if (grappleLine != null) grappleLine.positionCount = 2;
+            GunSystem.Instance.isAiming = true;
+            PlayerController.Instance.animator.SetBool("isAiming", true);
+            PlayerController.Instance.isGrappling = true;
         }
     }
 
-
-    /// <summary>
-    /// Call whenever we want to stop a grapple
-    /// </summary>
-    void StopGrapple()
+    public void StopGrapple()
     {
-        GrappleLine.positionCount = 0;
-        Destroy(joint);
-    }
-
-    private Vector3 currentGrapplePosition;
-
-    void DrawRope()
-    {
-        //If not grappling, don't draw rope
-        if (!joint) return;
-
-        currentGrapplePosition = Vector3.Lerp(currentGrapplePosition, GrapplePoint, Time.deltaTime * 8f);
-
-        GrappleLine.SetPosition(0, gunTip.position);
-        GrappleLine.SetPosition(1, currentGrapplePosition);
-    }
-
-    public bool IsGrappling()
-    {
-        return joint != null;
-    }
-
-    public Vector3 GetGrapplePoint()
-    {
-        return GrapplePoint;
+        audSource.Stop();
+        GunSystem.Instance.isAiming = false;
+        PlayerController.Instance.animator.SetBool("isAiming", false);
+        PlayerController.Instance.isGrappling = false;
+        isGrappling = false;
+        if (grappleLine != null) grappleLine.positionCount = 0;
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using Unity.Collections.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
@@ -43,7 +44,9 @@ public class PlayerController : MonoBehaviour
 
     private PlayerKeyboard playerinput;
     private float horizontalAxis;
-    private float verticalAxis; 
+    private float verticalAxis;
+
+    public bool isGrappling = false;
 
     private void Awake()
     {
@@ -51,7 +54,7 @@ public class PlayerController : MonoBehaviour
         playerinput = GetComponent<PlayerKeyboard>();
         staminaController = GetComponent<StaminaController>();
         rollTimer = 1.2f;
-        fallTimer = .75f;
+        fallTimer = .25f;
         
     }
 
@@ -153,23 +156,64 @@ public class PlayerController : MonoBehaviour
             fallTimer -= Time.deltaTime;
             if (fallTimer < 0)
             {
+                if (!isGrappling)
+                {
+
                 animator.SetBool("isFalling", true);
                 animator.SetBool("sprintJumping", false);
+                }
                 fallTimer = .75f;
             }
         }
+
+        //grapple
+        Vector3 grappleMove = Vector3.zero;
+        if (isGrappling)
+        {
+            
+            Vector3 toPoint = GrapplingHook.Instance.grapplePoint - transform.position;
+            float distance = toPoint.magnitude;
+            Vector3 dir = toPoint.normalized;
+
+            //pull towards grapple point
+            grappleMove = dir * GrapplingHook.Instance.grapplePullSpeed;
+
+            //add optional swing
+            Vector3 swingDir = Vector3.Cross(dir, Vector3.up).normalized;
+            grappleMove += swingDir * GrapplingHook.Instance.grappleSwingStrength;
+
+            //stop grapple if close
+            if (distance < GrapplingHook.Instance.grappleStopDistance)
+            {
+                isGrappling = false;
+                if (GrapplingHook.Instance.grappleLine != null) GrapplingHook.Instance.grappleLine.positionCount = 0;
+            }
+
+            //update rope visuals
+            if (GrapplingHook.Instance.grappleLine != null)
+            {
+                GrapplingHook.Instance.grappleLine.positionCount = 2;
+                GrapplingHook.Instance.grappleLine.SetPosition(0, GrapplingHook.Instance.gunTip.position);
+                GrapplingHook.Instance.grappleLine.SetPosition(1, GrapplingHook.Instance.grapplePoint);
+            }
+        }
+
+
+
         //gravity
         jumpVelocity.y += gravityConst * Time.deltaTime;
 
-        Vector3 finalMovement = newMovement + new Vector3(0f, jumpVelocity.y, 0f);
+        Vector3 finalMovement = newMovement + new Vector3(0f, jumpVelocity.y, 0f) + grappleMove;
         finalMovement.x *= movementMultiplier;
         finalMovement.z *= movementMultiplier;
-        characterController.Move((finalMovement * Time.deltaTime));
+
+            characterController.Move((finalMovement * Time.deltaTime));
+
         if (isGrounded)
         {
             animator.SetBool("isJumping",false);
             animator.SetBool("sprintJumping",false);
-                animator.SetBool("isFalling", false);
+            animator.SetBool("isFalling", false);
         }
 
         if (!isSprinting && !isRolling)

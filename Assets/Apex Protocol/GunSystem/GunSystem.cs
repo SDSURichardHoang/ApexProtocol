@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using Cinemachine;
-using UnityEngine.Rendering.Universal;
-using static UnityEngine.Rendering.DebugUI.Table;
+using UnityEngine.UI;
 
 
 public class GunSystem : MonoBehaviour
@@ -25,7 +24,10 @@ public class GunSystem : MonoBehaviour
     public Transform attackPoint;
     public TextMeshProUGUI AmmoText;
     public TextMeshProUGUI dropBind;
-    public GameObject gunUI;
+    public GameObject gun1UI;
+    public GameObject gun2UI;
+    public GameObject gun1ActiveBckg;
+    public GameObject gun2ActiveBckg;
 
     public RaycastHit RayHit;
     public LayerMask Enemy;
@@ -34,8 +36,11 @@ public class GunSystem : MonoBehaviour
     public GameObject weaponBarrel;
     public bool isAiming;
     public bool hasWeapon =false;
-    weaponObject currWeapon;
+    public weaponObject currWeapon;
+    public weaponObject[] wpnSlots= new weaponObject[2];
+    public int activeSlot = 0;
 
+    float soundVolume =0.5f;
 
     private void Awake()
     {
@@ -44,10 +49,20 @@ public class GunSystem : MonoBehaviour
     }
     private void Update()
     {
+        slotChange();
+        if (wpnSlots[0] != null && activeSlot == 0)
+        {
+            currWeapon = wpnSlots[0];
+        }
+        if (wpnSlots[1] != null && activeSlot == 1)
+        {
+            currWeapon = wpnSlots[1];
+            
 
+        }
         if (weaponEquipped!=null)
         {
-            currWeapon= weaponEquipped.GetComponent<weaponObject>();
+            weaponEquipped = currWeapon.transform;
             ammoText();
             MyInput();
         }
@@ -55,9 +70,9 @@ public class GunSystem : MonoBehaviour
 
 
     }
-
     private void MyInput()
     {
+        
         if (currWeapon.allowButtonhold)
         {
 
@@ -93,6 +108,7 @@ public class GunSystem : MonoBehaviour
         
         vCam.m_Lens.FieldOfView = 72f;
         animator.SetBool("isAiming", isAiming);
+
         setTransform("idle");
         if (Input.GetKey(KeyCode.Mouse1))
         {
@@ -101,12 +117,14 @@ public class GunSystem : MonoBehaviour
         }
         else
         {
-
-            isAiming = false;
+            if (!PlayerController.Instance.isGrappling)
+            {
+                isAiming = false;
+            }
         }
         
     }
-    private void aimIn()
+    public void aimIn()
     {
         isAiming = true;
         setTransform("aiming");
@@ -120,6 +138,7 @@ public class GunSystem : MonoBehaviour
         //audioSource.PlayOneShot(weaponEquipped.GetComponent<weaponObject>().reloadSound);
         audioSource.PlayOneShot(currWeapon.reloadSound);
         Invoke("ReloadFinished", currWeapon.reloadTime);
+        currWeapon.reloadDisplayTotalAmmo = currWeapon.totalAmmo;
     }
 
     private void ReloadFinished()
@@ -133,6 +152,7 @@ public class GunSystem : MonoBehaviour
     {
         currWeapon.bulletsLeft--;
         currWeapon.bulletsShot--;
+        currWeapon.totalAmmo--;
         readytoShoot = false;
 
 
@@ -164,7 +184,7 @@ public class GunSystem : MonoBehaviour
         var bulletHoleClone = Instantiate(bulletHoleGraphic, RayHit.point+RayHit.normal * 0.01f, rotationBullet);
         var muzzleFlashClone = Instantiate(muzzleFlash, weaponBarrel.transform.position, Quaternion.identity);
         AudioClip fireSoundAudio = weaponEquipped.GetComponent<weaponObject>().fireSound;
-        audioSource.PlayOneShot(fireSoundAudio,0.5f);
+        audioSource.PlayOneShot(fireSoundAudio,weaponEquipped.GetComponent<weaponObject>().soundVol);
         //Delete bullet hole and muzzle flash objects after 10 and 2 seconds respectively 
         Destroy(bulletHoleClone, 10f);
         Destroy(muzzleFlashClone, 2f);
@@ -209,6 +229,16 @@ public class GunSystem : MonoBehaviour
                     weaponEquipped.localRotation = Quaternion.Euler(206.5f, -52.7f, -141.2f);
                 }
                 break;
+            case "Grapple_Gun":
+                if (IdleOrAiming == "idle")
+                {
+                    weaponEquipped.localRotation = Quaternion.Euler(-40.9f, 222.2f, 39.3f);
+                }
+                else if(IdleOrAiming == "aiming")
+                {
+                    weaponEquipped.localRotation = Quaternion.Euler(-26f, -109f, -51.3f);
+                }
+                break;
 
         }
     }
@@ -217,7 +247,7 @@ public class GunSystem : MonoBehaviour
         if (!reloading)
         {
             AmmoText.fontSize = 36;
-            AmmoText.SetText(currWeapon.bulletsLeft + " / " + currWeapon.magazineSize);
+            AmmoText.SetText(currWeapon.bulletsLeft + " / " + currWeapon.reloadDisplayTotalAmmo );
         }
         else
         {
@@ -226,4 +256,43 @@ public class GunSystem : MonoBehaviour
             AmmoText.SetText("Reloading...");
         }
     }
-}
+    private void slotChange()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            activeSlot = 0;
+            gun1ActiveBckg.GetComponent<Image>().color = new Color(.9f, .9f, .9f, 0.9f);
+            gun2ActiveBckg.GetComponent<Image>().color = new Color(.5f, .5f, .5f, .5f);
+            handleSlotChange(activeSlot,1);
+            
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            activeSlot = 1;
+            gun2ActiveBckg.GetComponent<Image>().color = new Color(.9f, .9f, 0.9f, 0.9f);
+            gun1ActiveBckg.GetComponent<Image>().color = new Color(.5f, .5f, .5f, .5f);
+            handleSlotChange(activeSlot,0);
+        }
+
+
+    }
+    void handleSlotChange(int slot,int otherSlot)
+    {
+        if(wpnSlots[otherSlot] != null)
+        {
+            //wpnSlots[otherSlot].GetComponent<weaponObject>().setWeaponValues(false);
+            wpnSlots[otherSlot].gameObject.SetActive(false);
+        }
+        if (wpnSlots[slot] == null)
+        {
+            Debug.Log("no wepaon");
+            
+        }
+        else
+        {
+            Debug.Log("We have:"+wpnSlots[slot].transform.tag);
+            //wpnSlots[slot].GetComponent<weaponObject>().setWeaponValues(true);  
+            wpnSlots[slot].gameObject.SetActive(true);
+        }
+    }
+} 

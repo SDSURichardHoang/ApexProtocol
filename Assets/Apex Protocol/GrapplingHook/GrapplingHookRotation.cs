@@ -15,16 +15,6 @@ public class GrapplingHookRotation : MonoBehaviour
 
         void Update()
         {
-            if (!GrapplingHook.IsGrappling())
-            {
-                desiredRotation = transform.parent.rotation;
-            }
-            else
-            {
-                desiredRotation = Quaternion.LookRotation(GrapplingHook.GetGrapplePoint() - transform.position);
-            }
-
-            transform.rotation = Quaternion.Lerp(transform.rotation, desiredRotation, Time.deltaTime * rotationSpeed);
         }
 
     }
