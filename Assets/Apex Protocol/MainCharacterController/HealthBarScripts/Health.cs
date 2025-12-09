@@ -4,7 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBar : MonoBehaviour
+public class Health : MonoBehaviour
 {
     public Slider HealthSlider;
     public float maxHealth = 100f;
@@ -19,14 +19,18 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (health > 100)
+        {
+            health = 100;
+        }
         if (HealthSlider.value != health)
         {
             HealthSlider.value = health;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.T))
         {
-            //takeDamage(10);
+            takeDamage(10);
         }
 
 
