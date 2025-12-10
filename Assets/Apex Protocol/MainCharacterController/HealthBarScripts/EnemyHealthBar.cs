@@ -9,20 +9,29 @@ public class EnemyHealthBar : MonoBehaviour
     [SerializeField] private Camera camera;
     [SerializeField] private Transform target;
     [SerializeField] private Vector3 offset;
+    [SerializeField] public GameObject enemyGameObject;
 
     private void Awake()
     {
         Instance = this;
     }
-    public void UpdateHealthBar(float currentValue, float maxValue)
-    {
-        slider.value = currentValue / maxValue;
-    }
 
 
     void Update()
     {
-        transform.rotation = camera.transform.rotation;
-        transform.position = target.position + offset;
+        float health = 0;
+        float maxHealth = 0;
+        if (target != null && target.TryGetComponent<EnemyHealth>(out var enemyHealth))
+        {
+            health = enemyHealth.currHealth;
+            maxHealth = enemyHealth.maxHealth;
+            transform.rotation = camera.transform.rotation;
+            transform.position = target.position + offset;
+        }
+
+        slider.value = health / maxHealth;
+        if (target == null ||  health <= 0) {
+            Destroy(enemyGameObject);
+        }
     }
 }

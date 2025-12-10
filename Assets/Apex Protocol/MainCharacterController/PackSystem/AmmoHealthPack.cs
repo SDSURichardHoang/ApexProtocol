@@ -27,7 +27,7 @@ public class AmmoHealthPack : MonoBehaviour
                     break;
 
                 case "AmmoPack":
-                    if (GunSystem.Instance != null && GunSystem.Instance.currWeapon != null)
+                    if (GunSystem.Instance != null && GunSystem.Instance.currWeapon != null && GunSystem.Instance.currWeapon.tag !="Grapple_Gun")
                     {
                         GunSystem.Instance.currWeapon.totalAmmo += 20;
                         GunSystem.Instance.currWeapon.reloadDisplayTotalAmmo+= 20;

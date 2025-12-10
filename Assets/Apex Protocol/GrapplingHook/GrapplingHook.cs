@@ -31,7 +31,6 @@ public class GrapplingHook : MonoBehaviour
         if (cooldownTimer <=0 && Input.GetKey(KeyCode.Mouse0)&& GunSystem.Instance.currWeapon != null && GunSystem.Instance.currWeapon.tag =="Grapple_Gun")
         {
             StartGrapple();
-            cooldownTimer = cooldownTime;
         }
 
         if (Input.GetMouseButtonUp(0))
@@ -47,6 +46,8 @@ public class GrapplingHook : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f));
         if (Physics.Raycast(ray, out RaycastHit hit,grappleMaxRange, grappleMask))
         {
+
+            cooldownTimer = cooldownTime;
             audSource.Play();
             grapplePoint = hit.point;
             isGrappling = true;

@@ -1,3 +1,4 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml.Schema;
@@ -58,10 +59,19 @@ public class weaponObject : MonoBehaviour
     {
         Vector3 distanceToPlayer = player.position - transform.position;
         wpnInSlot = GunSystem.Instance.wpnSlots[GunSystem.Instance.activeSlot];
-        if (distanceToPlayer.magnitude <= EquipRange && Input.GetKeyDown(KeyCode.E) && !isEquipped && wpnInSlot == null)
+        if (distanceToPlayer.magnitude <= EquipRange && Input.GetKeyDown(KeyCode.E) && !isEquipped)
         {
+          if(wpnInSlot == null)
+            {
+                Equip();
+            }
+            else if (GunSystem.Instance.wpnSlots[GunSystem.Instance.otherSlot]==null)
+            {
+                GunSystem.Instance.activeSlot = GunSystem.Instance.otherSlot;
+                Equip();
+                GunSystem.Instance.slotChange(GunSystem.Instance.activeSlot);
 
-            Equip();
+            }
         }
 
         if(isEquipped && Input.GetKeyDown(KeyCode.Q))

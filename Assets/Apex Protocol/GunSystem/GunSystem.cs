@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class GunSystem : MonoBehaviour
 {
     public static GunSystem Instance;
-    public Animator animator;   
+    public Animator animator;
     public AudioSource audioSource;
     public AudioClip pistolShotSound;
 
@@ -19,6 +19,7 @@ public class GunSystem : MonoBehaviour
     public bool reloading;
 
     public GameObject muzzleFlash;
+    public GameObject bloodSplatter;
     public GameObject bulletHoleGraphic;
     public Camera GunCamera;
     public Transform attackPoint;
@@ -35,21 +36,22 @@ public class GunSystem : MonoBehaviour
     public Transform weaponEquipped;
     public GameObject weaponBarrel;
     public bool isAiming;
-    public bool hasWeapon =false;
+    public bool hasWeapon = false;
     public weaponObject currWeapon;
-    public weaponObject[] wpnSlots= new weaponObject[2];
+    public weaponObject[] wpnSlots = new weaponObject[2];
     public int activeSlot = 0;
+    public int otherSlot = 1;
 
-    float soundVolume =0.5f;
+    float soundVolume = 0.5f;
 
     private void Awake()
     {
         Instance = this;
         readytoShoot = true;
     }
-    private void Update()
+    public void Update()
     {
-        slotChange();
+        slotChange(-1);
         if (wpnSlots[0] != null && activeSlot == 0)
         {
             currWeapon = wpnSlots[0];
@@ -57,10 +59,10 @@ public class GunSystem : MonoBehaviour
         if (wpnSlots[1] != null && activeSlot == 1)
         {
             currWeapon = wpnSlots[1];
-            
+
 
         }
-        if (weaponEquipped!=null)
+        if (weaponEquipped != null)
         {
             weaponEquipped = currWeapon.transform;
             ammoText();
@@ -72,7 +74,7 @@ public class GunSystem : MonoBehaviour
     }
     private void MyInput()
     {
-        
+
         if (currWeapon.allowButtonhold)
         {
 
@@ -95,7 +97,7 @@ public class GunSystem : MonoBehaviour
 
 
 
-        if(readytoShoot && shooting && !reloading && currWeapon.bulletsLeft > 0)
+        if (readytoShoot && shooting && !reloading && currWeapon.bulletsLeft > 0)
         {
             currWeapon.bulletsShot = currWeapon.bulletsPerTap;
             //Invoke("aimIn",0f);
@@ -105,7 +107,7 @@ public class GunSystem : MonoBehaviour
 
         }
 
-        
+
         vCam.m_Lens.FieldOfView = 72f;
         animator.SetBool("isAiming", isAiming);
 
@@ -122,7 +124,7 @@ public class GunSystem : MonoBehaviour
                 isAiming = false;
             }
         }
-        
+
     }
     public void aimIn()
     {
@@ -168,37 +170,44 @@ public class GunSystem : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit RayHit, currWeapon.range))
         {
 
-                Debug.Log(RayHit.collider);
             if (RayHit.collider.CompareTag("Enemy"))
             {
 
-                //NOT COMPLETE UNTIL FIRST ENEMY SCRIPT IS CREATED
-                Debug.Log("hit");
                 RayHit.collider.GetComponent<EnemyHealth>().TakeDamage(currWeapon.damage);
-
+                switch (RayHit.collider.name)
+                {
+                    case "BatEnemy":
+                        var bloodSplatterTemp = Instantiate(bloodSplatter, RayHit.point + RayHit.normal * 0.01f, Quaternion.LookRotation(RayHit.normal * -1f));
+                        Destroy(bloodSplatterTemp, .55f);
+                        break;
+                }
 
 
 
             }
+            else
+            {
+
+                var bulletHoleClone = Instantiate(bulletHoleGraphic, RayHit.point + RayHit.normal * 0.01f, Quaternion.LookRotation(RayHit.normal * -1f));
+                Destroy(bulletHoleClone, 10f);
+            }
         }
 
         Quaternion rotationBullet = Quaternion.LookRotation(RayHit.normal * -1f);
-        var bulletHoleClone = Instantiate(bulletHoleGraphic, RayHit.point+RayHit.normal * 0.01f, rotationBullet);
         var muzzleFlashClone = Instantiate(muzzleFlash, weaponBarrel.transform.position, Quaternion.identity);
         AudioClip fireSoundAudio = weaponEquipped.GetComponent<weaponObject>().fireSound;
-        audioSource.PlayOneShot(fireSoundAudio,weaponEquipped.GetComponent<weaponObject>().soundVol);
+        audioSource.PlayOneShot(fireSoundAudio, weaponEquipped.GetComponent<weaponObject>().soundVol);
         //Delete bullet hole and muzzle flash objects after 10 and 2 seconds respectively 
-        Destroy(bulletHoleClone, 10f);
         Destroy(muzzleFlashClone, 2f);
 
 
         Invoke("ResetShot", currWeapon.timeBetweenShooting);
 
-        if(currWeapon.bulletsShot > 0 && currWeapon.bulletsLeft > 0)
+        if (currWeapon.bulletsShot > 0 && currWeapon.bulletsLeft > 0)
         {
             Invoke("Shoot", currWeapon.timeBetweenShots);
         }
-       
+
     }
 
     private void ResetShot()
@@ -207,16 +216,16 @@ public class GunSystem : MonoBehaviour
     }
     private void setTransform(string IdleOrAiming)
     {
-        
+
         switch (weaponEquipped.tag)
         {
             case "Pistol":
                 if (IdleOrAiming == "idle")
                 {
-                    weaponEquipped.localRotation =Quaternion.Euler(-44.1f, -168.2f, -298.5f);
-                }else if (IdleOrAiming == "aiming")
+                    weaponEquipped.localRotation = Quaternion.Euler(-44.1f, -168.2f, -298.5f);
+                } else if (IdleOrAiming == "aiming")
                 {
-                    weaponEquipped.localRotation= Quaternion.Euler(-141.3f, -301.8f, -224.8f);
+                    weaponEquipped.localRotation = Quaternion.Euler(-141.3f, -301.8f, -224.8f);
                 }
 
                 break;
@@ -226,7 +235,7 @@ public class GunSystem : MonoBehaviour
                 {
                     weaponEquipped.localRotation = Quaternion.Euler(168.1f, -20.4f, -120.4f);
                 }
-                else if(IdleOrAiming == "aiming")
+                else if (IdleOrAiming == "aiming")
                 {
                     weaponEquipped.localRotation = Quaternion.Euler(206.5f, -52.7f, -141.2f);
                 }
@@ -236,7 +245,7 @@ public class GunSystem : MonoBehaviour
                 {
                     weaponEquipped.localRotation = Quaternion.Euler(-40.9f, 222.2f, 39.3f);
                 }
-                else if(IdleOrAiming == "aiming")
+                else if (IdleOrAiming == "aiming")
                 {
                     weaponEquipped.localRotation = Quaternion.Euler(-26f, -109f, -51.3f);
                 }
@@ -249,7 +258,7 @@ public class GunSystem : MonoBehaviour
         if (!reloading)
         {
             AmmoText.fontSize = 36;
-            AmmoText.SetText(currWeapon.bulletsLeft + " / " + currWeapon.reloadDisplayTotalAmmo );
+            AmmoText.SetText(currWeapon.bulletsLeft + " / " + currWeapon.reloadDisplayTotalAmmo);
         }
         else
         {
@@ -258,17 +267,27 @@ public class GunSystem : MonoBehaviour
             AmmoText.SetText("Reloading...");
         }
     }
-    private void slotChange()
+    // change slots, manual slot change call parameter allows for this function to be called
+    // from other scripts to change the slot from code 
+    public void slotChange(int manualSlotChangeCall)
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (activeSlot == 0)
+        {
+            otherSlot = 1;
+        }
+        if (activeSlot == 1)
+        {
+            otherSlot = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha1) || manualSlotChangeCall ==0)
         {
             activeSlot = 0;
             gun1ActiveBckg.GetComponent<Image>().color = new Color(.9f, .9f, .9f, 0.9f);
             gun2ActiveBckg.GetComponent<Image>().color = new Color(.5f, .5f, .5f, .5f);
-            handleSlotChange(activeSlot,1);
-            
+            handleSlotChange(activeSlot, 1);
+
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (Input.GetKeyDown(KeyCode.Alpha2) || manualSlotChangeCall == 1)
         {
             activeSlot = 1;
             gun2ActiveBckg.GetComponent<Image>().color = new Color(.9f, .9f, 0.9f, 0.9f);
