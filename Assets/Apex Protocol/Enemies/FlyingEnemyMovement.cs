@@ -10,7 +10,7 @@ public class FlyingEnemyMovement : MonoBehaviour
     public float speed = 1f;
 
     private bool chase;
-    //private Transform playerDirection;
+    private Transform player;
 
     // Start is called before the first frame update
     void Start()
@@ -21,12 +21,11 @@ public class FlyingEnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (chase)
-        //{
-        //    GameObject player = 
-        //    playerDirection = 
-        //    transform.position += playerDirection * (speed * 2) * Time.deltaTime; 
-        //}
+        if (chase)
+        {
+            Vector3 chaseDirection = (player.position - transform.position).normalized;
+            transform.position += Time.deltaTime * (speed * 2) * chaseDirection;
+        }
     }
 
     //coroutine for Wandering, or moving around randomly while player is not nearby
@@ -42,7 +41,7 @@ public class FlyingEnemyMovement : MonoBehaviour
             float pauseDuration = Random.Range(1f, 3f);
 
             float timer = 0f;
-            while (timer < movementDuration)
+            while (timer < movementDuration && !chase)
             {
                 //enemy moves in a random direction for a random amount of time
                 transform.position += Time.deltaTime * speed * randomMovement;
@@ -59,11 +58,8 @@ public class FlyingEnemyMovement : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             chase = true;
-            while (chase)
-            {
-                Vector3 playerDirection = (other.transform.position - transform.position).normalized;
-                transform.position += Time.deltaTime * (speed * 2) * playerDirection;
-            }
+            player = other.transform;
+            StopCoroutine(WanderCoroutine());
         }
     }
 

@@ -1817,7 +1817,7 @@ GameObject:
   - component: {fileID: 7546683679900116711}
   m_Layer: 0
   m_Name: ThirdPersonController
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1953,12 +1953,16 @@ MonoBehaviour:
   reloading: 0
   muzzleFlash: {fileID: 8078720523478869859, guid: 4f5fc4bbd01b03a4499a6ed77f175fc7,
     type: 3}
+  bloodSplatter: {fileID: 0}
   bulletHoleGraphic: {fileID: 0}
   GunCamera: {fileID: 8901256624861851945}
   attackPoint: {fileID: 5836101730377398155}
   AmmoText: {fileID: 0}
   dropBind: {fileID: 0}
-  gunUI: {fileID: 0}
+  gun1UI: {fileID: 0}
+  gun2UI: {fileID: 0}
+  gun1ActiveBckg: {fileID: 0}
+  gun2ActiveBckg: {fileID: 0}
   Enemy:
     serializedVersion: 2
     m_Bits: 0
@@ -1967,6 +1971,12 @@ MonoBehaviour:
   weaponBarrel: {fileID: 4455248358401705758}
   isAiming: 0
   hasWeapon: 0
+  currWeapon: {fileID: 0}
+  wpnSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  activeSlot: 0
+  otherSlot: 1
 --- !u!114 &4998639621318019711
 MonoBehaviour:
   m_ObjectHideFlags: 0
