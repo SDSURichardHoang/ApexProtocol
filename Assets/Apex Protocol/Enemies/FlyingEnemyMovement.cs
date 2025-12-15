@@ -8,6 +8,8 @@ public class FlyingEnemyMovement : MonoBehaviour
 
     //speed variable, customizable based on enemy
     public float speed = 1f;
+    //attack range variable, customizable based on enemy
+    public float attackRange = 1f;
 
     private bool chase;
     private Transform player;
@@ -23,8 +25,23 @@ public class FlyingEnemyMovement : MonoBehaviour
     {
         if (chase)
         {
-            Vector3 chaseDirection = (player.position - transform.position).normalized;
-            transform.position += Time.deltaTime * (speed * 2) * chaseDirection;
+            float distanceFromPlayer = Vector3.Distance(transform.position, player.position);
+
+            if (distanceFromPlayer <= attackRange) //stop chasing and enter attack function
+            {
+                //attack
+            }
+
+            else
+            {
+                Vector3 chaseDirection = (player.position - transform.position).normalized;
+                if (chaseDirection != Vector3.zero) //code for the enemy to rotate in the direction of the player
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(chaseDirection);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+                }
+                transform.position += Time.deltaTime * (speed * 2) * chaseDirection;
+            }
         }
     }
 
@@ -45,6 +62,13 @@ public class FlyingEnemyMovement : MonoBehaviour
             {
                 //enemy moves in a random direction for a random amount of time
                 transform.position += Time.deltaTime * speed * randomMovement;
+                //code for the enemy to rotate in the direction it is moving in
+                if (randomMovement != Vector3.zero)
+                {
+                    Quaternion targetRotation = Quaternion.LookRotation(randomMovement);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * 5f);
+                }
+
                 timer += Time.deltaTime;
                 yield return null;
             }

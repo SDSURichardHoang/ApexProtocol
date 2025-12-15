@@ -1,19 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class GroundedEnemyMovement : MonoBehaviour
 {
 
     //speed variable, customizable based on enemy
     public float speed = 1f;
+    //attack range variable, customizable based on enemy
+    public float attackRange = 1f;
 
+    //NavMesh used for grounded enemies compared to flying enemies
+    private NavMeshAgent agent;
+    //used for the sphere collider
+    private SphereCollider sphereCollider;
     private bool chase;
     private Transform player;
 
     // Start is called before the first frame update
     void Start()
     {
+        //neccesary components for NavMeshAgent, starts Wander Coroutine after
+        agent = GetComponent<NavMeshAgent>();
+        agent.speed = speed;
+        sphereCollider = GetComponent<SphereCollider>();
         StartCoroutine(WanderCoroutine());
     }
 
@@ -22,8 +33,20 @@ public class GroundedEnemyMovement : MonoBehaviour
     {
         if (chase)
         {
-            Vector3 chaseDirection = (player.position - transform.position).normalized;
-            transform.position += Time.deltaTime * (speed * 2) * chaseDirection;
+            float distanceFromPlayer = Vector3.Distance(transform.position, player.position);
+
+            if (distanceFromPlayer <= attackRange) //stop chasing and enter attack function
+            {
+                agent.isStopped = true;
+                agent.ResetPath();
+                //attack
+            }
+
+            else
+            {
+                agent.isStopped = false;
+                agent.SetDestination(player.position);
+            }
         }
     }
 
@@ -33,21 +56,20 @@ public class GroundedEnemyMovement : MonoBehaviour
         while (!chase)
         {
             //decides on a random direction for the enemy to move to
-            Vector3 randomMovement = Random.onUnitSphere;
-            //gives a random amount of time between 1 and 5 seconds
-            float movementDuration = Random.Range(1f, 5f);
-            //gives a random amount of time between 1 and 3 seconds
-            float pauseDuration = Random.Range(1f, 3f);
+            Vector3 randomDirection = Random.insideUnitSphere * sphereCollider.radius;
+            randomDirection += transform.position;
+            NavMeshHit hit;
+            NavMesh.SamplePosition(randomDirection, out hit, sphereCollider.radius, NavMesh.AllAreas);
+            //sets the destination within the NavMesh for the enemy to go
+            agent.SetDestination(hit.position);
 
-            float timer = 0f;
-            while (timer < movementDuration && !chase)
+            while (agent.remainingDistance > agent.stoppingDistance && !chase)
             {
                 //enemy moves in a random direction for a random amount of time
-                transform.position += Time.deltaTime * speed * randomMovement;
-                timer += Time.deltaTime;
                 yield return null;
             }
-            yield return new WaitForSeconds(pauseDuration);
+            //pauses before engaging in a new movement
+            yield return new WaitForSeconds(Random.Range(1f, 3f));
         }
     }
 
