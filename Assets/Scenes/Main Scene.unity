@@ -1563,7 +1563,7 @@ MonoBehaviour:
   spread: 0.1
   range: 50
   bulletsPerTap: 0
-  reloadTime: 0
+  reloadTime: 2.3
   timeBetweenShots: 0
   magazineSize: 30
   totalAmmo: 90
@@ -2443,6 +2443,12 @@ PrefabInstance:
       propertyPath: flame
       value: 
       objectReference: {fileID: 262350292}
+    - target: {fileID: 4212823495591229752, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: laser
+      value: 
+      objectReference: {fileID: 8078720523478869859, guid: a802158cbf9746642b9284c51755ebb8,
+        type: 3}
     - target: {fileID: 4212823495591229752, guid: 799ff1729e8f361419473affd49be100,
         type: 3}
       propertyPath: spine
