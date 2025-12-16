@@ -10,6 +10,8 @@ TagManager:
   - HealthPack
   - AmmoPack
   - Enemy
+  - Assault_Rifle
+  - Flamethrower
   layers:
   - Default
   - TransparentFX

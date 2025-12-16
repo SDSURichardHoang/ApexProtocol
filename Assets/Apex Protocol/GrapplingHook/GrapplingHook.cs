@@ -54,7 +54,7 @@ public class GrapplingHook : MonoBehaviour
             PlayerController.Instance.isGrappling = true;
             if (grappleLine != null) grappleLine.positionCount = 2;
             GunSystem.Instance.isAiming = true;
-            PlayerController.Instance.animator.SetBool("isAiming", true);
+            //PlayerController.Instance.animator.SetBool("isAiming", true);
             PlayerController.Instance.isGrappling = true;
         }
     }
@@ -63,7 +63,6 @@ public class GrapplingHook : MonoBehaviour
     {
         audSource.Stop();
         GunSystem.Instance.isAiming = false;
-        PlayerController.Instance.animator.SetBool("isAiming", false);
         PlayerController.Instance.isGrappling = false;
         isGrappling = false;
         if (grappleLine != null) grappleLine.positionCount = 0;

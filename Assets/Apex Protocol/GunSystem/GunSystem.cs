@@ -5,10 +5,12 @@ using TMPro;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
+using KevinIglesias;
 
 
 public class GunSystem : MonoBehaviour
 {
+    public Transform player;
     public static GunSystem Instance;
     public Animator animator;
     public AudioSource audioSource;
@@ -41,8 +43,14 @@ public class GunSystem : MonoBehaviour
     public weaponObject[] wpnSlots = new weaponObject[2];
     public int activeSlot = 0;
     public int otherSlot = 1;
+    public GameObject glow;
+    public GameObject laser;
+    public GameObject flame;
+    public GameObject head;
+    public ParticleSystem flameParticles;
 
     float soundVolume = 0.5f;
+    private string aimAnimate = "isAimingOneHanded";
 
     private void Awake()
     {
@@ -51,6 +59,8 @@ public class GunSystem : MonoBehaviour
     }
     public void Update()
     {
+        flameEffect();
+        assignAnimation();
         slotChange(-1);
         if (wpnSlots[0] != null && activeSlot == 0)
         {
@@ -109,7 +119,7 @@ public class GunSystem : MonoBehaviour
 
 
         vCam.m_Lens.FieldOfView = 72f;
-        animator.SetBool("isAiming", isAiming);
+        animator.SetBool(aimAnimate, isAiming);
 
         setTransform("idle");
         if (Input.GetKey(KeyCode.Mouse1))
@@ -131,7 +141,7 @@ public class GunSystem : MonoBehaviour
         isAiming = true;
         setTransform("aiming");
         vCam.m_Lens.FieldOfView = 35f;
-        animator.SetBool("isAiming", isAiming);
+        animator.SetBool(aimAnimate, isAiming);
     }
 
     private void Reload()
@@ -158,7 +168,7 @@ public class GunSystem : MonoBehaviour
         readytoShoot = false;
 
 
-        float x = Random.Range(-currWeapon.spread, currWeapon.spread);
+        //float x = Random.Range(-currWeapon.spread, currWeapon.spread);
         float y = Random.Range(-currWeapon.spread, currWeapon.spread);
 
         Vector3 direction = GunCamera.transform.forward;
@@ -166,47 +176,86 @@ public class GunSystem : MonoBehaviour
 
 
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f));
-
-        if (Physics.Raycast(ray, out RaycastHit RayHit, currWeapon.range))
+        if (currWeapon.tag != "Flamethrower")
         {
-
-            if (RayHit.collider.CompareTag("Enemy"))
+            if (Physics.Raycast(ray, out RaycastHit RayHit, currWeapon.range))
             {
 
-                RayHit.collider.GetComponent<EnemyHealth>().TakeDamage(currWeapon.damage);
-                switch (RayHit.collider.name)
+                if (RayHit.collider.CompareTag("Enemy"))
                 {
-                    case "BatEnemy":
-                        var bloodSplatterTemp = Instantiate(bloodSplatter, RayHit.point + RayHit.normal * 0.01f, Quaternion.LookRotation(RayHit.normal * -1f));
-                        Destroy(bloodSplatterTemp, .55f);
-                        break;
+
+                    RayHit.collider.GetComponent<EnemyHealth>().TakeDamage(currWeapon.damage);
+                    switch (RayHit.collider.name)
+                    {
+                        case "BatEnemy":
+                            GameObject bloodSplatterTemp = Instantiate(bloodSplatter, RayHit.point + RayHit.normal * 0.01f, Quaternion.LookRotation(RayHit.normal * -1f));
+                            Destroy(bloodSplatterTemp, .55f);
+                            break;
+                    }
+
+
+
                 }
-
-
-
+                else
+                {
+                    if (currWeapon.tag != "Flamethrower")
+                    {
+                        var bulletHoleClone = Instantiate(bulletHoleGraphic, RayHit.point + RayHit.normal * 0.01f, Quaternion.LookRotation(RayHit.normal * -1f));
+                        Destroy(bulletHoleClone, 10f);
+                    }
+                }
             }
-            else
+        }
+        else
+        {
+            float radius = 0.3f;         // width of the flame
+            float maxDistance = 10f;   // range
+            Ray rayflame = new Ray(weaponBarrel.transform.transform.position, weaponBarrel.transform.forward);
+            RaycastHit[] hits = Physics.SphereCastAll(ray, radius, maxDistance);
+
+            foreach (RaycastHit hit in hits)
             {
-
-                var bulletHoleClone = Instantiate(bulletHoleGraphic, RayHit.point + RayHit.normal * 0.01f, Quaternion.LookRotation(RayHit.normal * -1f));
-                Destroy(bulletHoleClone, 10f);
+                if (hit.collider.CompareTag("Enemy"))
+                {
+                    hit.collider.GetComponent<EnemyHealth>().TakeDamage(currWeapon.damage);
+                }
             }
+
         }
 
         Quaternion rotationBullet = Quaternion.LookRotation(RayHit.normal * -1f);
-        var muzzleFlashClone = Instantiate(muzzleFlash, weaponBarrel.transform.position, Quaternion.identity);
+        GameObject muzzleFlashClone = null;
+        if(currWeapon.tag == "Flamethrower")
+        {
+            Debug.Log("Test");
+            flame.transform.position = weaponBarrel.transform.position;
+            flame.transform.rotation = weaponBarrel.transform.rotation * Quaternion.Euler(90, 0, 0);
+            //muzzleFlashClone = Instantiate(flame, weaponBarrel.transform.Iposition, rotationFlame);
+            //muzzleFlashClone = Instantiate(flame, weaponBarrel.transform.position,player.rotation* Quaternion.Euler(0f,20f,0f) );
+        }
+        else if(currWeapon.tag== "Assault_Rifle")
+        {
+
+            muzzleFlashClone = Instantiate(laser, weaponBarrel.transform.position, Quaternion.identity);
+            //Color flashColor = muzzleFlashClone.GetComponent<Color>();
+            //flashColor = new Color(0f, 0.2f, 1f);
+        }
+        else
+        {
+
+            muzzleFlashClone = Instantiate(muzzleFlash, weaponBarrel.transform.position, Quaternion.identity);
+        }
         AudioClip fireSoundAudio = weaponEquipped.GetComponent<weaponObject>().fireSound;
         audioSource.PlayOneShot(fireSoundAudio, weaponEquipped.GetComponent<weaponObject>().soundVol);
-        //Delete bullet hole and muzzle flash objects after 10 and 2 seconds respectively 
-        Destroy(muzzleFlashClone, 2f);
+        Destroy(muzzleFlashClone, .2f);
 
 
         Invoke("ResetShot", currWeapon.timeBetweenShooting);
 
-        if (currWeapon.bulletsShot > 0 && currWeapon.bulletsLeft > 0)
-        {
-            Invoke("Shoot", currWeapon.timeBetweenShots);
-        }
+        //if (currWeapon.bulletsShot > 0 && currWeapon.bulletsLeft > 0)
+        //{
+            //Invoke("Shoot", currWeapon.timeBetweenShots);
+        //}
 
     }
 
@@ -250,6 +299,34 @@ public class GunSystem : MonoBehaviour
                     weaponEquipped.localRotation = Quaternion.Euler(-26f, -109f, -51.3f);
                 }
                 break;
+            case "Assault_Rifle":
+                
+                if (IdleOrAiming == "idle")
+                {
+                    weaponEquipped.localRotation = Quaternion.Euler(-10.9f, 222.2f, 39.3f);
+                    weaponEquipped.localPosition= new Vector3(-0.182f, 0.08f, -0.242f);
+                }
+                else if (IdleOrAiming == "aiming")
+                {
+                    weaponEquipped.localRotation = Quaternion.Euler(-93f, -11.1f, -75.3f);
+                    weaponEquipped.localPosition= new Vector3(0.122f, 0.381f, -0.009f);
+                }
+                break;
+            case "Flamethrower":
+                
+                if (IdleOrAiming == "idle")
+                {
+                    weaponEquipped.localRotation = Quaternion.Euler(-254.9f, -396.2f, 67.3f);
+                    //weaponEquipped.localRotation = Quaternion.Euler(168f, -86f, 9.6f);
+                    weaponEquipped.localPosition = new Vector3(0.19f, 0.315f, 0.17f);
+                }
+                else if (IdleOrAiming == "aiming")
+                {
+                    weaponEquipped.localRotation = Quaternion.Euler(168f, -86f, 9.6f);
+                    weaponEquipped.localPosition = new Vector3(-0.134f, 0.697f, 0.03f);
+                }
+                break;
+
 
         }
     }
@@ -257,7 +334,14 @@ public class GunSystem : MonoBehaviour
     {
         if (!reloading)
         {
-            AmmoText.fontSize = 36;
+            if(currWeapon.tag== "Flamethrower")
+            {
+                AmmoText.fontSize = 22;
+            }
+            else
+            {
+                AmmoText.fontSize = 32;
+            }
             AmmoText.SetText(currWeapon.bulletsLeft + " / " + currWeapon.reloadDisplayTotalAmmo);
         }
         else
@@ -316,4 +400,32 @@ public class GunSystem : MonoBehaviour
             wpnSlots[slot].gameObject.SetActive(true);
         }
     }
+    private void assignAnimation()
+    {
+        if (currWeapon != null)
+        {
+            if (currWeapon.twoHandedWeapon)
+            {
+                aimAnimate = "isAimingtwoHanded";
+            }
+            else
+            {
+                aimAnimate = "isAimingOneHanded";
+            }
+        }
+
+    }
+    private void flameEffect()
+    {
+        if(currWeapon!=null && currWeapon.tag == "Flamethrower" && shooting)
+        {
+            flameParticles.Play();
+        }
+        else
+        {
+            flameParticles.Stop();
+        }
+    }
+
 } 
+

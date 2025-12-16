@@ -12,12 +12,12 @@ public class weaponObject : MonoBehaviour
     public float timeBetweenShooting;
     public float spread;
     public float range;
+    public int bulletsPerTap;
     public float reloadTime;
     public float timeBetweenShots;
     public int magazineSize;
     public int totalAmmo;
     public int reloadDisplayTotalAmmo;
-    public int bulletsPerTap;
     public int damage;
     public int bulletsLeft;
     public int bulletsShot;
@@ -32,6 +32,8 @@ public class weaponObject : MonoBehaviour
     public AudioClip reloadSound;
     public Sprite uiImage;
     public GameObject popup;
+    private GameObject glowPrefab;
+    private GameObject glow;
 
     private float EquipRange = 1.75f;
 
@@ -43,6 +45,7 @@ public class weaponObject : MonoBehaviour
     public float soundVol = 0.5f;
     public int slot = -1;
     weaponObject wpnInSlot;
+    public bool twoHandedWeapon = false;
 
 
     private void Start()
@@ -53,6 +56,10 @@ public class weaponObject : MonoBehaviour
         GunSystem.Instance.gun2UI.SetActive(false);
         GunSystem.Instance.AmmoText.enabled = false;
         GunSystem.Instance.dropBind.enabled = false;
+        glowPrefab  = GunSystem.Instance.glow;
+        glow = Instantiate(glowPrefab);
+        glow.transform.localScale= new Vector3(.7f, .30f, .7f);
+        glow.SetActive(false);
     }
 
     private void Update()
@@ -81,6 +88,20 @@ public class weaponObject : MonoBehaviour
             GunSystem.Instance.weaponEquipped= null;
             GunSystem.Instance.wpnSlots[GunSystem.Instance.activeSlot]= null;
         }
+
+        // keep glow and popup aligned with weapon and rotate with player camera
+        glow.transform.position = transform.position;
+        // enable glow from further away than equip range
+        if (!isEquipped && distanceToPlayer.magnitude <= EquipRange + 10f)
+        {
+
+            glow.transform.rotation = player.rotation;
+            glow.SetActive(true);
+        }
+        else
+        {
+            glow.SetActive(false);
+        }
         if (!isEquipped && distanceToPlayer.magnitude<=EquipRange)
         {
             //spin and show popup
@@ -92,7 +113,6 @@ public class weaponObject : MonoBehaviour
         }
         else
         {
-            
             popup.SetActive(false); 
         }
     }
@@ -103,6 +123,9 @@ public class weaponObject : MonoBehaviour
         slot = GunSystem.Instance.activeSlot;
         setWeaponValues(true);
         Debug.Log(transform.tag);
+
+        // assign the position and scale of the weapon
+        // TODO check if this persists with weapon switches
         switch (transform.tag)
         {
             case "Pistol":
@@ -120,6 +143,17 @@ public class weaponObject : MonoBehaviour
                 transform.localScale = new Vector3(0.03f,0.03f,0.03f);
                 Debug.Log("Grapple_Gun");
                 break;
+            case "Assault_Rifle":
+                //transform.localPosition =new Vector3(0.058f, 0.39f, -0.115f);
+                transform.localPosition =new Vector3(-0.182f, 0.08f, -0.242f);
+                transform.localScale = new Vector3(0.5f,0.5f,0.5f);
+                Debug.Log("ar");
+                break;
+            case "Flamethrower":
+                transform.localPosition = new Vector3(-0.134f, 0.697f, 0.03f);
+                transform.localScale = new Vector3(15f,15f,15f);
+                Debug.Log("fthrow");
+                break;
             default:
                 Debug.Log("empty");
                 break;
@@ -134,7 +168,14 @@ public class weaponObject : MonoBehaviour
     {
         if (GunSystem.Instance.activeSlot == slot)
         {
-            transform.rotation = Quaternion.Euler(Vector3.zero);
+            if(transform.tag == "Flamethrower")
+            {   
+               transform.rotation = Quaternion.Euler(90f,0f,0f);
+            }
+            else 
+            { 
+                transform.rotation = Quaternion.Euler(Vector3.zero);
+            }
             setWeaponValues(false);
         }
         
