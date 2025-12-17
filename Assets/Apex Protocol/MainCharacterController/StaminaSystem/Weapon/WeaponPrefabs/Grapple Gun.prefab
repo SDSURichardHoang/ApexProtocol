@@ -340,7 +340,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9d415a8956448fa489e5943f900ca3ad,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.090922356
+      value: -4.98
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9d415a8956448fa489e5943f900ca3ad,
         type: 3}
@@ -447,12 +447,12 @@ MonoBehaviour:
   timeBetweenShooting: 0
   spread: 0
   range: 0
+  bulletsPerTap: 0
   reloadTime: 0
   timeBetweenShots: 0
   magazineSize: 0
   totalAmmo: 0
   reloadDisplayTotalAmmo: 0
-  bulletsPerTap: 0
   damage: 0
   bulletsLeft: 0
   bulletsShot: 0
@@ -468,6 +468,7 @@ MonoBehaviour:
   isEquipped: 0
   soundVol: 0
   slot: 0
+  twoHandedWeapon: 0
 --- !u!114 &6689668280295855211
 MonoBehaviour:
   m_ObjectHideFlags: 0

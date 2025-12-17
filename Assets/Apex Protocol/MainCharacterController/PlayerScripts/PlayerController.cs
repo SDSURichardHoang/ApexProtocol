@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     public bool isSprinting = false;
     bool isRolling = false;
     float rollTimer;
-    float fallTimer;
+    float fallTimer, fallDamageTimer;
 
     public float gravityConst = -9.81F;
 
@@ -55,6 +55,7 @@ public class PlayerController : MonoBehaviour
         staminaController = GetComponent<StaminaController>();
         rollTimer = 1.2f;
         fallTimer = .25f;
+        fallDamageTimer = 5f;
         
     }
 
@@ -154,6 +155,7 @@ public class PlayerController : MonoBehaviour
         if (!isGrounded)
         {
             fallTimer -= Time.deltaTime;
+            Debug.Log(fallTimer);
             if (fallTimer < 0)
             {
                 if (!isGrappling)
@@ -163,6 +165,21 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("sprintJumping", false);
                 }
                 fallTimer = .75f;
+            }
+            fallDamageTimer += Time.deltaTime;
+
+        }
+        // fall damage
+        if (isGrounded)
+        {
+            if (fallDamageTimer > 5)
+            {
+                this.GetComponent<Health>().takeDamage(fallDamageTimer);
+                fallDamageTimer = 0;
+            }
+            else
+            {
+                fallDamageTimer = 0;
             }
         }
 
