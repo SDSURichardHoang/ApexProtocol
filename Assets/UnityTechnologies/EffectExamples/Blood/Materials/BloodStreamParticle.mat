@@ -129,7 +129,11 @@ Material:
     - _SpecColor: {r: 0.058823526, g: 0.058823526, b: 0.058823526, a: 1}
     - _TintColor: {r: 0.3602941, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []
+<<<<<<< Updated upstream
 --- !u!114 &512919444132138286
+=======
+--- !u!114 &1803040999905798606
+>>>>>>> Stashed changes
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
