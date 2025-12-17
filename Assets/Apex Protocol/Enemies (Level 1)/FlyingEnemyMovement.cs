@@ -12,8 +12,9 @@ public class FlyingEnemyMovement : MonoBehaviour
     public float attackRange = 1f;
     
     private bool chase;
-    private Transform player;
-
+    public Transform player;
+    public float distanceFromPlayer;
+    public float minChaseDistance = 10f;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +24,10 @@ public class FlyingEnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        distanceFromPlayer = Vector3.Distance(transform.position, player.position);
         if (chase)
         {
-            float distanceFromPlayer = Vector3.Distance(transform.position, player.position);
 
             if (distanceFromPlayer <= attackRange) //stop chasing and enter attack function
             {
@@ -44,6 +46,7 @@ public class FlyingEnemyMovement : MonoBehaviour
                 transform.position += Time.deltaTime * (speed * 2) * chaseDirection;
             }
         }
+        chaseDetection();
     }
 
     //coroutine for Wandering, or moving around randomly while player is not nearby
@@ -78,22 +81,19 @@ public class FlyingEnemyMovement : MonoBehaviour
     }
 
     //this code is to enter and exit the "chase" mode
-    private void OnTriggerEnter(Collider other)
+    private void chaseDetection()
     {
-        if (other.CompareTag("Player"))
+        if(distanceFromPlayer <= minChaseDistance)
         {
             chase = true;
-            player = other.transform;
+            StartCoroutine(WanderCoroutine());
+        }
+        else
+        {
+            chase = false;
             StopCoroutine(WanderCoroutine());
         }
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-       if (other.CompareTag("Player"))
-        {
-            chase = false;
-            StartCoroutine(WanderCoroutine());
-        }
-    }
+
 }

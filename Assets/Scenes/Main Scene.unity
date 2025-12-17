@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.11266571, g: 0.28144085, b: 0.70868206, a: 1}
+  m_IndirectSpecularColor: {r: 0.11272048, g: 0.28158414, b: 0.7091768, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2110,10 +2110,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -7354802935155888726, guid: 7648391b6bbcada49a938c9cf48ddc8c,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.015718266
+      objectReference: {fileID: 0}
+    - target: {fileID: -7354802935155888726, guid: 7648391b6bbcada49a938c9cf48ddc8c,
+        type: 3}
+      propertyPath: m_Center.y
+      value: 0.0049999934
+      objectReference: {fileID: 0}
+    - target: {fileID: -7354802935155888726, guid: 7648391b6bbcada49a938c9cf48ddc8c,
+        type: 3}
+      propertyPath: m_Center.z
+      value: 0.0007182574
+      objectReference: {fileID: 0}
     - target: {fileID: 2797357656398053886, guid: 7648391b6bbcada49a938c9cf48ddc8c,
         type: 3}
       propertyPath: m_Name
       value: SlimeEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2797357656398053886, guid: 7648391b6bbcada49a938c9cf48ddc8c,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 3046574504273266906, guid: 7648391b6bbcada49a938c9cf48ddc8c,
         type: 3}
@@ -2170,6 +2190,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7344948120389099234, guid: 7648391b6bbcada49a938c9cf48ddc8c,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 857871990}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2183,6 +2208,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2704897806742374844, guid: 24615a9d471abec4da52495e63c76b02,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 6398922873115526033, guid: 24615a9d471abec4da52495e63c76b02,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 857871990}
     - target: {fileID: 8927054959774578484, guid: 24615a9d471abec4da52495e63c76b02,
         type: 3}
       propertyPath: m_Name

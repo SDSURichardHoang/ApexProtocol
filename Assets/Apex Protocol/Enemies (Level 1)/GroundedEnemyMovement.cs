@@ -16,7 +16,9 @@ public class GroundedEnemyMovement : MonoBehaviour
     //used for the sphere collider
     private SphereCollider sphereCollider;
     private bool chase;
-    private Transform player;
+    public Transform player;
+    public float distanceFromPlayer;
+    public float minChaseDistance = 10f;
 
     // Start is called before the first frame update
     void Start()
@@ -31,9 +33,9 @@ public class GroundedEnemyMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        distanceFromPlayer = Vector3.Distance(transform.position, player.position);
         if (chase)
         {
-            float distanceFromPlayer = Vector3.Distance(transform.position, player.position);
 
             if (distanceFromPlayer <= attackRange) //stop chasing and enter attack function
             {
@@ -48,6 +50,7 @@ public class GroundedEnemyMovement : MonoBehaviour
                 agent.SetDestination(player.position);
             }
         }
+        chaseDetection();
     }
 
     //coroutine for Wandering, or moving around randomly while player is not nearby
@@ -74,22 +77,17 @@ public class GroundedEnemyMovement : MonoBehaviour
     }
 
     //this code is to enter and exit the "chase" mode
-    private void OnTriggerEnter(Collider other)
+    private void chaseDetection()
     {
-        if (other.CompareTag("Player"))
+        if(distanceFromPlayer <= minChaseDistance)
         {
             chase = true;
-            player = other.transform;
-            StopCoroutine(WanderCoroutine());
+            StartCoroutine(WanderCoroutine());
         }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        else
         {
             chase = false;
-            StartCoroutine(WanderCoroutine());
+            StopCoroutine(WanderCoroutine());
         }
     }
 }
