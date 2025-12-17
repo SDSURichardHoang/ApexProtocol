@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 public class GroundedEnemyMovement : MonoBehaviour
 {
-
     //speed variable, customizable based on enemy
     public float speed = 1f;
     //attack range variable, customizable based on enemy
