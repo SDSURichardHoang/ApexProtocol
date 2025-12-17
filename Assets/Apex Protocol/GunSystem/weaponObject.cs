@@ -95,6 +95,7 @@ public class weaponObject : MonoBehaviour
         if (!isEquipped && distanceToPlayer.magnitude <= EquipRange + 10f)
         {
 
+            transform.RotateAround(transform.position, Vector3.up, 50f * Time.deltaTime);
             glow.transform.rotation = player.rotation;
             glow.SetActive(true);
         }
@@ -102,6 +103,7 @@ public class weaponObject : MonoBehaviour
         {
             glow.SetActive(false);
         }
+        // if within equip range sohw popup
         if (!isEquipped && distanceToPlayer.magnitude<=EquipRange)
         {
             //spin and show popup

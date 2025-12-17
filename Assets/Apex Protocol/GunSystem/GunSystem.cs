@@ -185,9 +185,11 @@ public class GunSystem : MonoBehaviour
                 {
 
                     RayHit.collider.GetComponent<EnemyHealth>().TakeDamage(currWeapon.damage);
+                    Debug.Log(RayHit.collider.name);
                     switch (RayHit.collider.name)
                     {
                         case "BatEnemy":
+                        case "SlimeEnemy":
                             GameObject bloodSplatterTemp = Instantiate(bloodSplatter, RayHit.point + RayHit.normal * 0.01f, Quaternion.LookRotation(RayHit.normal * -1f));
                             Destroy(bloodSplatterTemp, .55f);
                             break;
