@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.07393653, g: 0.08130406, b: 0.22295761, a: 1}
+  m_IndirectSpecularColor: {r: 0.049974684, g: 0.03686008, b: 0.14688154, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -301,6 +301,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: GiantGolemBoss
+      objectReference: {fileID: 0}
+    - target: {fileID: 5183391259692694363, guid: c6b1d9db85fa05e499a6db590297c632,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5522761487328256481, guid: c6b1d9db85fa05e499a6db590297c632,
         type: 3}
@@ -2215,10 +2220,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6398922873115526033, guid: 24615a9d471abec4da52495e63c76b02,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8927054959774578484, guid: 24615a9d471abec4da52495e63c76b02,
         type: 3}
       propertyPath: m_Name
       value: BatEnemy (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8927054959774578484, guid: 24615a9d471abec4da52495e63c76b02,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8927054959775001364, guid: 24615a9d471abec4da52495e63c76b02,
         type: 3}
@@ -2747,6 +2762,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlimeEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2797357656398053886, guid: 7648391b6bbcada49a938c9cf48ddc8c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6966355202613915081, guid: 7648391b6bbcada49a938c9cf48ddc8c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2918,6 +2938,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4483830403358642, guid: 74442f407a24ac84f95f08a83b1bb617,
     type: 3}
   m_PrefabInstance: {fileID: 656291045}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &658940302 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8361998365276960771, guid: 799ff1729e8f361419473affd49be100,
+    type: 3}
+  m_PrefabInstance: {fileID: 1175778768}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &687341208
 PrefabInstance:
@@ -3973,6 +3999,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74442f407a24ac84f95f08a83b1bb617, type: 3}
+--- !u!4 &940350360 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4648113209978664216, guid: 799ff1729e8f361419473affd49be100,
+    type: 3}
+  m_PrefabInstance: {fileID: 1175778768}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &940350365 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4212823495591229752, guid: 799ff1729e8f361419473affd49be100,
+    type: 3}
+  m_PrefabInstance: {fileID: 1175778768}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ec9c04347d5584ba449f69a3fa1166, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &945485195
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5395,6 +5439,18 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
+    - target: {fileID: 4212823495591229752, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: flame
+      value: 
+      objectReference: {fileID: 2625927355034074397, guid: f8c20b9eecb74d847a02c8848c737cd2,
+        type: 3}
+    - target: {fileID: 4212823495591229752, guid: 799ff1729e8f361419473affd49be100,
+        type: 3}
+      propertyPath: flameParticles
+      value: 
+      objectReference: {fileID: 1859470245259905130, guid: f8c20b9eecb74d847a02c8848c737cd2,
+        type: 3}
     - target: {fileID: 5247860773490692650, guid: 799ff1729e8f361419473affd49be100,
         type: 3}
       propertyPath: m_Name
@@ -7009,6 +7065,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlimeEnemy (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2797357656398053886, guid: 7648391b6bbcada49a938c9cf48ddc8c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6966355202613915081, guid: 7648391b6bbcada49a938c9cf48ddc8c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7227,6 +7288,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlimeEnemy (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2797357656398053886, guid: 7648391b6bbcada49a938c9cf48ddc8c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6966355202613915081, guid: 7648391b6bbcada49a938c9cf48ddc8c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7294,6 +7360,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BatEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8927054959774578484, guid: 24615a9d471abec4da52495e63c76b02,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8927054959775001364, guid: 24615a9d471abec4da52495e63c76b02,
         type: 3}
@@ -7619,6 +7690,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SlimeEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2797357656398053886, guid: 7648391b6bbcada49a938c9cf48ddc8c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6966355202613915081, guid: 7648391b6bbcada49a938c9cf48ddc8c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7747,6 +7823,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5351260986615021995, guid: b38ae4b19f14fa04d84a427ceaf0c861,
     type: 3}
   m_PrefabInstance: {fileID: 1770638715}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1781823642 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8485807436611608707, guid: 799ff1729e8f361419473affd49be100,
+    type: 3}
+  m_PrefabInstance: {fileID: 1175778768}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &1811238123 stripped
 Transform:
@@ -7919,6 +8001,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SlimeEnemy (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2797357656398053886, guid: 7648391b6bbcada49a938c9cf48ddc8c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6966355202613915081, guid: 7648391b6bbcada49a938c9cf48ddc8c,
         type: 3}
@@ -8699,6 +8786,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BatEnemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 8927054959774578484, guid: 24615a9d471abec4da52495e63c76b02,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8927054959775001364, guid: 24615a9d471abec4da52495e63c76b02,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8977,6 +9069,94 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2071332759}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2088381013
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1741302244548245657, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: m_Name
+      value: Grapple Gun
+      objectReference: {fileID: 0}
+    - target: {fileID: 1831358766645436188, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 940350360}
+    - target: {fileID: 1831358766645436188, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: gunScript
+      value: 
+      objectReference: {fileID: 940350365}
+    - target: {fileID: 1831358766645436188, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: gunContainer
+      value: 
+      objectReference: {fileID: 1781823642}
+    - target: {fileID: 1831358766645436188, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: ThirdPersonCam
+      value: 
+      objectReference: {fileID: 658940302}
+    - target: {fileID: 3676213836773571411, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 231.99951
+      objectReference: {fileID: 0}
+    - target: {fileID: 3676213836773571411, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 658.2805
+      objectReference: {fileID: 0}
+    - target: {fileID: 3676213836773571411, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -206.95908
+      objectReference: {fileID: 0}
+    - target: {fileID: 3676213836773571411, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.624166
+      objectReference: {fileID: 0}
+    - target: {fileID: 3676213836773571411, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3676213836773571411, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.78129184
+      objectReference: {fileID: 0}
+    - target: {fileID: 3676213836773571411, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3676213836773571411, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3676213836773571411, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3676213836773571411, guid: a9b1f237d2aaa0d4c87be7a009096f21,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a9b1f237d2aaa0d4c87be7a009096f21, type: 3}
 --- !u!1001 &2101661577
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8989,6 +9169,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BatEnemy (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8927054959774578484, guid: 24615a9d471abec4da52495e63c76b02,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8927054959775001364, guid: 24615a9d471abec4da52495e63c76b02,
         type: 3}
@@ -9239,3 +9424,4 @@ SceneRoots:
   - {fileID: 1651548705}
   - {fileID: 69437827}
   - {fileID: 1175778768}
+  - {fileID: 2088381013}
