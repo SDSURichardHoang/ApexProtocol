@@ -291,8 +291,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 183de781422055d4db3800a321d83013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackTimer: 2
   speed: 10
   attackRange: 1.15
+  damage: 5
   animator: {fileID: 663659086257595909}
   isAttacking: 0
   isWalking: 0

@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using UnityEditor.VersionControl;
 using UnityEngine;
 
-public class FlyingEnemyMovement : MonoBehaviour
+public class FlyingEnemyController : MonoBehaviour
 {
-
+    //attack timer, customizable based on enemy
+    public float attackTimer;
+    float attackTimePlaceholder;
     //speed variable, customizable based on enemy
     public float speed = 1f;
     //attack range variable, customizable based on enemy
     public float attackRange = 1f;
-    
+    //attack damage, customizable based on enemy
+    public float damage;
+    public Animator animator;
+    public bool isAttacking, isFlying;
+
     private bool chase;
     public Transform player;
     public float distanceFromPlayer;
@@ -19,6 +25,8 @@ public class FlyingEnemyMovement : MonoBehaviour
     void Start()
     {
         StartCoroutine(WanderCoroutine());
+        //placeholder variable to hold the attackTimer time for resetting
+        attackTimePlaceholder = attackTimer;
     }
 
     // Update is called once per frame
@@ -31,12 +39,20 @@ public class FlyingEnemyMovement : MonoBehaviour
 
             if (distanceFromPlayer <= attackRange) //stop chasing and enter attack function
             {
-                //attack code
-                //include code for attack animation(?)
+                attackTimer -= Time.deltaTime;
+                if (attackTimer < 0f)
+                {
+                    animator.SetBool("isFlying", false);
+                    animator.SetBool("isAttacking", true);
+                    player.GetComponent<Health>().takeDamage(damage);
+                    attackTimer = attackTimePlaceholder;
+                }
             }
 
             else
             {
+                animator.SetBool("isAttacking", false);
+                animator.SetBool("isFlying", true);
                 Vector3 chaseDirection = (player.position - transform.position).normalized;
                 if (chaseDirection != Vector3.zero) //code for the enemy to rotate in the direction of the player
                 {
@@ -54,6 +70,9 @@ public class FlyingEnemyMovement : MonoBehaviour
     {
         while (!chase)
         {
+            //triggers flying animation
+            animator.SetBool("isAttacking", false);
+            animator.SetBool("isFlying", true);
             //decides on a random direction for the enemy to move to
             Vector3 randomMovement = Random.onUnitSphere;
             //gives a random amount of time between 1 and 5 seconds

@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class GroundedEnemyMovement : MonoBehaviour
+public class GroundedEnemyController : MonoBehaviour
 {
-    float attackTimer;
+    //attack timer, customizable based on enemy
+    public float attackTimer;
+    float attackTimePlaceholder;
     //speed variable, customizable based on enemy
     public float speed = 1f;
     //attack range variable, customizable based on enemy
     public float attackRange = 1f;
+    //attack damage, customizable based on enemy
+    public float damage;
     public Animator animator;
     public bool isAttacking, isWalking;
 
@@ -30,7 +34,8 @@ public class GroundedEnemyMovement : MonoBehaviour
         agent.speed = speed;
         sphereCollider = GetComponent<SphereCollider>();
         StartCoroutine(WanderCoroutine());
-        attackTimer = 2f;
+        //placeholder variable to hold the attackTimer time for resetting
+        attackTimePlaceholder = attackTimer;
     }
 
     // Update is called once per frame
@@ -46,13 +51,14 @@ public class GroundedEnemyMovement : MonoBehaviour
                 agent.isStopped = true;
                 agent.ResetPath();
                 //trigger attack animation
-                animator.SetBool("isWalking", false);
-                animator.SetBool("isAttacking", true);
+                
                 attackTimer -= Time.deltaTime;
                 if (attackTimer < 0f)
                 {
-                    player.GetComponent<Health>().takeDamage(5);
-                    attackTimer = 2f;
+                    animator.SetBool("isWalking", false);
+                    animator.SetBool("isAttacking", true);
+                    player.GetComponent<Health>().takeDamage(damage);
+                    attackTimer = attackTimePlaceholder;
                 }
             }
 

@@ -68,6 +68,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 59afa1f2c595d6343b15e945602e1f8f, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: f3e7b1ca4225cf840ac4b872f3bb369a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -89,6 +93,12 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: -757181370800449127}
   m_SourcePrefab: {fileID: 100100000, guid: 59afa1f2c595d6343b15e945602e1f8f, type: 3}
+--- !u!95 &8927054959767307510 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 9500000, guid: 59afa1f2c595d6343b15e945602e1f8f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8927054959774609814}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &8927054959774578484 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100002, guid: 59afa1f2c595d6343b15e945602e1f8f,
@@ -107,8 +117,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0af644e8b73d1c24880e741b980567e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackTimer: 3
   speed: 1
   attackRange: 3
+  damage: 5
+  animator: {fileID: 8927054959767307510}
+  isAttacking: 0
+  isWalking: 0
+  player: {fileID: 0}
+  distanceFromPlayer: 0
+  minChaseDistance: 10
 --- !u!135 &2704897806742374844
 SphereCollider:
   m_ObjectHideFlags: 0
