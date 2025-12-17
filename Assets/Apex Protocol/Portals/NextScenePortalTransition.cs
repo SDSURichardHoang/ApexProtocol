@@ -9,8 +9,9 @@ public class NextScenePortalTransition : MonoBehaviour
 
     void OnTriggerEnter(Collider Transition)
     {
+        Debug.Log("yeah");
         if (Transition.CompareTag("Player"))
-        {
+        { 
             SceneManager.LoadScene(LvL2scene);
         }
     }

@@ -6190,7 +6190,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1165418826}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 539152524218077282, guid: 2557b316da33b034986a4b68ca98a463,
         type: 3}
@@ -6200,17 +6200,17 @@ PrefabInstance:
     - target: {fileID: 5303846970860061371, guid: 2557b316da33b034986a4b68ca98a463,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.8130677
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5303846970860061371, guid: 2557b316da33b034986a4b68ca98a463,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.6127174
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5303846970860061371, guid: 2557b316da33b034986a4b68ca98a463,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.033445
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 5303846970860061371, guid: 2557b316da33b034986a4b68ca98a463,
         type: 3}
@@ -25676,12 +25676,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2007370255}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1138306585 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5303846970860061371, guid: 2557b316da33b034986a4b68ca98a463,
-    type: 3}
-  m_PrefabInstance: {fileID: 303220304}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1138861219 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3476499947573637210, guid: d2670d0ea7d6e7f4cb7e6be1a5541d46,
@@ -26302,7 +26296,6 @@ Transform:
   - {fileID: 693474945}
   - {fileID: 1194008025}
   - {fileID: 1236289635}
-  - {fileID: 1138306585}
   - {fileID: 1879508807}
   - {fileID: 1132769196}
   - {fileID: 1535472367}
@@ -34349,68 +34342,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
---- !u!108 &1526098019
-Light:
-  m_ObjectHideFlags: 8
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1526098016}
-  m_Enabled: 1
-  serializedVersion: 10
-  m_Type: 2
-  m_Shape: 0
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 10
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
-  m_CookieSize: 10
-  m_Shadows:
-    m_Type: 0
-    m_Resolution: -1
-    m_CustomResolution: -1
-    m_Strength: 1
-    m_Bias: 0.05
-    m_NormalBias: 0.4
-    m_NearPlane: 0.2
-    m_CullingMatrixOverride:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
-      e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
-    m_UseCullingMatrixOverride: 0
-  m_Cookie: {fileID: 0}
-  m_DrawHalo: 0
-  m_Flare: {fileID: 0}
-  m_RenderMode: 0
-  m_CullingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_RenderingLayerMask: 1
-  m_Lightmapping: 4
-  m_LightShadowCasterMode: 0
-  m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 6570
-  m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
-  m_UseBoundingSphereOverride: 0
-  m_UseViewFrustumForShadowCasterCull: 1
-  m_ShadowRadius: 0
-  m_ShadowAngle: 0
 --- !u!4 &1530524558 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3537792449865722905, guid: f96442df40a0bf74bbd6431cf2ee05d9,
@@ -47199,6 +47130,7 @@ SceneRoots:
   - {fileID: 1727015529}
   - {fileID: 1165418826}
   - {fileID: 1327206138}
+  - {fileID: 303220304}
   - {fileID: 1073946273}
   - {fileID: 45599343}
   - {fileID: 264728642}
