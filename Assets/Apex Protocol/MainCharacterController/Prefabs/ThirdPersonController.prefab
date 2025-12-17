@@ -1959,10 +1959,14 @@ MonoBehaviour:
   attackPoint: {fileID: 5836101730377398155}
   AmmoText: {fileID: 0}
   dropBind: {fileID: 0}
+<<<<<<< Updated upstream
   gun1UI: {fileID: 0}
   gun2UI: {fileID: 0}
   gun1ActiveBckg: {fileID: 0}
   gun2ActiveBckg: {fileID: 0}
+=======
+  gunUI: {fileID: 0}
+>>>>>>> Stashed changes
   Enemy:
     serializedVersion: 2
     m_Bits: 0
@@ -1971,12 +1975,15 @@ MonoBehaviour:
   weaponBarrel: {fileID: 4455248358401705758}
   isAiming: 0
   hasWeapon: 0
+<<<<<<< Updated upstream
   currWeapon: {fileID: 0}
   wpnSlots:
   - {fileID: 0}
   - {fileID: 0}
   activeSlot: 0
   otherSlot: 1
+=======
+>>>>>>> Stashed changes
 --- !u!114 &4998639621318019711
 MonoBehaviour:
   m_ObjectHideFlags: 0
