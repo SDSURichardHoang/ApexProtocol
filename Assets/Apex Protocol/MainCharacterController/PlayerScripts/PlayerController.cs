@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour
         staminaController = GetComponent<StaminaController>();
         rollTimer = 1.2f;
         fallTimer = .25f;
-        fallDamageTimer = 5f;
+        fallDamageTimer = 0f;
         
     }
 
@@ -155,7 +155,6 @@ public class PlayerController : MonoBehaviour
         if (!isGrounded)
         {
             fallTimer -= Time.deltaTime;
-            Debug.Log(fallTimer);
             if (fallTimer < 0)
             {
                 if (!isGrappling)
@@ -174,7 +173,8 @@ public class PlayerController : MonoBehaviour
         {
             if (fallDamageTimer > 5)
             {
-                this.GetComponent<Health>().takeDamage(fallDamageTimer);
+                Debug.Log(fallDamageTimer);
+                this.GetComponent<Health>().takeDamage(fallDamageTimer*fallDamageTimer);
                 fallDamageTimer = 0;
             }
             else

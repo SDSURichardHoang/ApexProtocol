@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class Health : MonoBehaviour
@@ -33,6 +34,7 @@ public class Health : MonoBehaviour
         {
             takeDamage(10);
         }
+        checkForDeath();
 
 
        
@@ -40,5 +42,12 @@ public class Health : MonoBehaviour
     public void takeDamage(float damage)
     {
         health -= damage;
+    }
+    void checkForDeath()
+    {
+        if(health< 0)
+        {
+            SceneManager.LoadScene("Game Over");
+        }
     }
 }
