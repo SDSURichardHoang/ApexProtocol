@@ -236,7 +236,7 @@ GameObject:
   - component: {fileID: -1922978096584487382}
   m_Layer: 0
   m_Name: SlimeEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -268,7 +268,7 @@ Animator:
   m_GameObject: {fileID: 2797357656398053886}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: e607f74860c67814e93c914b710142d5, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: cd95260886dddef4299124a6b84fc0c6, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -292,7 +292,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 10
-  attackRange: 2
+  attackRange: 1.15
+  animator: {fileID: 663659086257595909}
+  isAttacking: 0
+  isWalking: 0
+  player: {fileID: 0}
+  distanceFromPlayer: 0
+  minChaseDistance: 10
 --- !u!135 &-7354802935155888726
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -312,8 +318,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.015718266
+  m_Center: {x: 0, y: 0.0049999934, z: 0.0007182574}
 --- !u!195 &3610945455710843884
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -348,7 +354,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee97e479dc4dba4fa21acf16373975b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 150
   currHealth: 0
 --- !u!114 &-1922978096584487382
 MonoBehaviour:

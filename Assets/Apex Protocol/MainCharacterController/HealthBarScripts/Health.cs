@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
+    public static Health Instance;
     public Slider HealthSlider;
     public float maxHealth = 100f;
     public float health;
@@ -34,9 +35,10 @@ public class Health : MonoBehaviour
         }
 
 
-        void takeDamage(float damage)
-        {
-            health -= damage;
-        }
+       
+    }
+    public void takeDamage(float damage)
+    {
+        health -= damage;
     }
 }

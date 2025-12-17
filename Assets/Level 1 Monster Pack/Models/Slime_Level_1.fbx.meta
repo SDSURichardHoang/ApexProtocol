@@ -1,75 +1,164 @@
 fileFormatVersion: 2
 guid: e607f74860c67814e93c914b710142d5
-timeCreated: 1480907741
-licenseType: Store
 ModelImporter:
-  serializedVersion: 19
-  fileIDToRecycleName:
-    100000: BackArrowControl
-    100002: FrontArrowControl
-    100004: LeftArrowControl
-    100006: MESH
-    100008: RIG
-    100010: RightArrowControl
-    100012: //RootNode
-    100014: SlimeBackTailJoint
-    100016: SlimeControl
-    100018: SlimeControl1
-    100020: SlimeFrontTailJoint
-    100022: SlimeHeadJoint
-    100024: SlimeLeftTailJoint
-    100026: SlimeLevel1 1
-    100028: SlimeNeckJoint
-    100030: SlimeRightJoint
-    100032: SlimeRootJoint
-    400000: BackArrowControl
-    400002: FrontArrowControl
-    400004: LeftArrowControl
-    400006: MESH
-    400008: RIG
-    400010: RightArrowControl
-    400012: //RootNode
-    400014: SlimeBackTailJoint
-    400016: SlimeControl
-    400018: SlimeControl1
-    400020: SlimeFrontTailJoint
-    400022: SlimeHeadJoint
-    400024: SlimeLeftTailJoint
-    400026: SlimeLevel1 1
-    400028: SlimeNeckJoint
-    400030: SlimeRightJoint
-    400032: SlimeRootJoint
-    4300000: SlimeLevel1
-    7400000: slime_idle
-    7400002: slime_move
-    7400004: slime_attack
-    7400006: slime_die
-    9500000: //RootNode
-    13700000: SlimeLevel1 1
+  serializedVersion: 22200
+  internalIDToNameTable:
+  - first:
+      1: 100000
+    second: BackArrowControl
+  - first:
+      1: 100002
+    second: FrontArrowControl
+  - first:
+      1: 100004
+    second: LeftArrowControl
+  - first:
+      1: 100006
+    second: MESH
+  - first:
+      1: 100008
+    second: RIG
+  - first:
+      1: 100010
+    second: RightArrowControl
+  - first:
+      1: 100012
+    second: //RootNode
+  - first:
+      1: 100014
+    second: SlimeBackTailJoint
+  - first:
+      1: 100016
+    second: SlimeControl
+  - first:
+      1: 100018
+    second: SlimeControl1
+  - first:
+      1: 100020
+    second: SlimeFrontTailJoint
+  - first:
+      1: 100022
+    second: SlimeHeadJoint
+  - first:
+      1: 100024
+    second: SlimeLeftTailJoint
+  - first:
+      1: 100026
+    second: SlimeLevel1 1
+  - first:
+      1: 100028
+    second: SlimeNeckJoint
+  - first:
+      1: 100030
+    second: SlimeRightJoint
+  - first:
+      1: 100032
+    second: SlimeRootJoint
+  - first:
+      4: 400000
+    second: BackArrowControl
+  - first:
+      4: 400002
+    second: FrontArrowControl
+  - first:
+      4: 400004
+    second: LeftArrowControl
+  - first:
+      4: 400006
+    second: MESH
+  - first:
+      4: 400008
+    second: RIG
+  - first:
+      4: 400010
+    second: RightArrowControl
+  - first:
+      4: 400012
+    second: //RootNode
+  - first:
+      4: 400014
+    second: SlimeBackTailJoint
+  - first:
+      4: 400016
+    second: SlimeControl
+  - first:
+      4: 400018
+    second: SlimeControl1
+  - first:
+      4: 400020
+    second: SlimeFrontTailJoint
+  - first:
+      4: 400022
+    second: SlimeHeadJoint
+  - first:
+      4: 400024
+    second: SlimeLeftTailJoint
+  - first:
+      4: 400026
+    second: SlimeLevel1 1
+  - first:
+      4: 400028
+    second: SlimeNeckJoint
+  - first:
+      4: 400030
+    second: SlimeRightJoint
+  - first:
+      4: 400032
+    second: SlimeRootJoint
+  - first:
+      43: 4300000
+    second: SlimeLevel1
+  - first:
+      74: 7400000
+    second: slime_idle
+  - first:
+      74: 7400002
+    second: slime_move
+  - first:
+      74: 7400004
+    second: slime_attack
+  - first:
+      74: 7400006
+    second: slime_die
+  - first:
+      95: 9500000
+    second: //RootNode
+  - first:
+      137: 13700000
+    second: SlimeLevel1 1
+  externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
     motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
     animationWrapMode: 0
     extraExposedTransformPaths: []
+    extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
       name: slime_idle
       takeName: Take 001
+      internalID: 0
       firstFrame: 1
       lastFrame: 24
       wrapMode: 0
@@ -132,6 +221,7 @@ ModelImporter:
     - serializedVersion: 16
       name: slime_move
       takeName: Take 001
+      internalID: 0
       firstFrame: 30
       lastFrame: 54
       wrapMode: 0
@@ -194,6 +284,7 @@ ModelImporter:
     - serializedVersion: 16
       name: slime_attack
       takeName: Take 001
+      internalID: 0
       firstFrame: 60
       lastFrame: 80
       wrapMode: 0
@@ -202,7 +293,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -256,6 +347,7 @@ ModelImporter:
     - serializedVersion: 16
       name: slime_die
       takeName: Take 001
+      internalID: 0
       firstFrame: 90
       lastFrame: 112
       wrapMode: 0
@@ -321,25 +413,49 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importPhysicalCameras: 0
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    nodeNameCollisionStrategy: 0
+    fileIdsGeneration: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMeshForGPU: 1
     keepQuads: 0
     weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 0
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
     secondaryUVPackMargin: 4
     useFileScale: 1
+    strictVertexDataChecks: 0
   tangentSpace:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
+    serializedVersion: 3
     human: []
     skeleton: []
     armTwist: 0.5
@@ -349,11 +465,19 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
+    globalScale: 1
     rootMotionBoneName: SlimeControl
     hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 2
   humanoidOversampling: 1
+  avatarSetup: 1
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 0
+  importBlendShapeDeformPercent: 0
+  remapMaterialsIfMaterialImportModeIsNone: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

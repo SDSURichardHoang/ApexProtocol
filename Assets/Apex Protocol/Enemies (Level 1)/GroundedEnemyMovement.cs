@@ -5,17 +5,19 @@ using UnityEngine.AI;
 
 public class GroundedEnemyMovement : MonoBehaviour
 {
-
+    float attackTimer;
     //speed variable, customizable based on enemy
     public float speed = 1f;
     //attack range variable, customizable based on enemy
     public float attackRange = 1f;
+    public Animator animator;
+    public bool isAttacking, isWalking;
 
     //NavMesh used for grounded enemies compared to flying enemies
     private NavMeshAgent agent;
     //used for the sphere collider
     private SphereCollider sphereCollider;
-    private bool chase;
+    private bool chase, attack;
     public Transform player;
     public float distanceFromPlayer;
     public float minChaseDistance = 10f;
@@ -28,12 +30,14 @@ public class GroundedEnemyMovement : MonoBehaviour
         agent.speed = speed;
         sphereCollider = GetComponent<SphereCollider>();
         StartCoroutine(WanderCoroutine());
+        attackTimer = 2f;
     }
 
     // Update is called once per frame
     void Update()
     {
         distanceFromPlayer = Vector3.Distance(transform.position, player.position);
+        transform.LookAt(player);
         if (chase)
         {
 
@@ -41,11 +45,21 @@ public class GroundedEnemyMovement : MonoBehaviour
             {
                 agent.isStopped = true;
                 agent.ResetPath();
-                //attack
+                //trigger attack animation
+                animator.SetBool("isWalking", false);
+                animator.SetBool("isAttacking", true);
+                attackTimer -= Time.deltaTime;
+                if (attackTimer < 0f)
+                {
+                    player.GetComponent<Health>().takeDamage(5);
+                    attackTimer = 2f;
+                }
             }
 
             else
             {
+                animator.SetBool("isAttacking", false);
+                animator.SetBool("isWalking", true);
                 agent.isStopped = false;
                 agent.SetDestination(player.position);
             }
@@ -58,6 +72,9 @@ public class GroundedEnemyMovement : MonoBehaviour
     {
         while (!chase)
         {
+            //triggers walking animation
+            animator.SetBool("isAttacking", false);
+            animator.SetBool("isWalking", true);
             //decides on a random direction for the enemy to move to
             Vector3 randomDirection = Random.insideUnitSphere * sphereCollider.radius;
             randomDirection += transform.position;
