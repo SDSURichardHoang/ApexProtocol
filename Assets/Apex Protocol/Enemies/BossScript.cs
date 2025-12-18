@@ -5,14 +5,22 @@ using UnityEngine.AI;
 
 public class BossScript : MonoBehaviour
 {
-    //speed variable, customizable based on enemy
+    //variables customizable based on boss
     public float speed = 1f;
+    public float meleeRange, projectileRange, meleeDamage, cooldown, escapeRange;
 
-    //NavMesh used for grounded enemies compared to flying enemies
+    //variables for the arena
+    public float arenaSize;
+    private Vector3 arenaCenter;
+
+    public Transform player;
+    public Animator animator;
+    public GameObject projectilePrefab;
+    public Transform projectilePoint;
+
     private NavMeshAgent agent;
-    //used for the sphere collider
-    private SphereCollider sphereCollider;
-    private Transform player;
+    private float attackTimer;
+    private bool beginEncounter;
 
     // Start is called before the first frame update
     void Start()
@@ -20,8 +28,8 @@ public class BossScript : MonoBehaviour
         //neccesary components for NavMeshAgent, starts Wander Coroutine after
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
-        sphereCollider = GetComponent<SphereCollider>();
-        //StartCoroutine(WanderCoroutine());
+        arenaCenter = transform.position;
+        attackTimer = cooldown;
     }
 
     // Update is called once per frame

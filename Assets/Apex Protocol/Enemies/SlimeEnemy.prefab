@@ -291,7 +291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackTimer: 2
-  speed: 10
+  speed: 1
   attackRange: 1.15
   damage: 5
   animator: {fileID: 663659086257595909}

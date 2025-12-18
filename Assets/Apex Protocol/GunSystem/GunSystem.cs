@@ -216,6 +216,7 @@ public class GunSystem : MonoBehaviour
                     {
                         case "BatEnemy":
                         case "SlimeEnemy":
+                        case "SkeletonEnemy":
                             GameObject bloodSplatterTemp = Instantiate(bloodSplatter, RayHit.point + RayHit.normal * 0.01f, Quaternion.LookRotation(RayHit.normal * -1f));
                             Destroy(bloodSplatterTemp, .55f);
                             break;

@@ -36,6 +36,7 @@ public class GroundedEnemyController : MonoBehaviour
         StartCoroutine(WanderCoroutine());
         //placeholder variable to hold the attackTimer time for resetting
         attackTimePlaceholder = attackTimer;
+        player = PlayerController.Instance.transform;
     }
 
     // Update is called once per frame
