@@ -113,10 +113,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7558400030779699710}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cfbfb95b5f2b90949be0b5faab2775fb,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -3129823719384653154}
   m_SourcePrefab: {fileID: 100100000, guid: cfbfb95b5f2b90949be0b5faab2775fb, type: 3}
 --- !u!1 &5183391259692694363 stripped
 GameObject:
@@ -194,20 +190,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 1000
   currHealth: 0
---- !u!114 &-3129823719384653154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5183391259692694363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e25068556841e48a2dd698bbd42234, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
-  camera: {fileID: 0}
-  target: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
-  enemyGameObject: {fileID: 0}

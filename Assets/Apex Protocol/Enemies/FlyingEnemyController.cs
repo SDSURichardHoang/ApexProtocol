@@ -17,6 +17,10 @@ public class FlyingEnemyController : MonoBehaviour
     public Animator animator;
     public bool isAttacking, isFlying;
 
+    //projectile
+    public GameObject projectilePrefab;
+    public Transform projectileSpawn;
+
     private bool chase;
     public Transform player;
     public float distanceFromPlayer;
@@ -44,7 +48,9 @@ public class FlyingEnemyController : MonoBehaviour
                 {
                     animator.SetBool("isFlying", false);
                     animator.SetBool("isAttacking", true);
-                    player.GetComponent<Health>().takeDamage(damage);
+                    GameObject projectile = Instantiate<GameObject>(projectilePrefab, projectileSpawn.position, projectileSpawn.rotation);
+                    Projectile proj = projectile.GetComponent<Projectile>();
+                    proj.SetDamage(damage);
                     attackTimer = attackTimePlaceholder;
                 }
             }

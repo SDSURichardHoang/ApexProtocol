@@ -233,7 +233,6 @@ GameObject:
   - component: {fileID: -7354802935155888726}
   - component: {fileID: 3610945455710843884}
   - component: {fileID: 3046574504273266906}
-  - component: {fileID: -1922978096584487382}
   m_Layer: 0
   m_Name: SlimeEnemy
   m_TagString: Enemy
@@ -358,23 +357,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 150
   currHealth: 0
---- !u!114 &-1922978096584487382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2797357656398053886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e25068556841e48a2dd698bbd42234, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
-  camera: {fileID: 0}
-  target: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
-  enemyGameObject: {fileID: 0}
 --- !u!1 &3731067866843285664
 GameObject:
   m_ObjectHideFlags: 0

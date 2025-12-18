@@ -2128,21 +2128,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2704897806742374844, guid: 24615a9d471abec4da52495e63c76b02,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.03
-      objectReference: {fileID: 0}
     - target: {fileID: 6398922873115526033, guid: 24615a9d471abec4da52495e63c76b02,
         type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 857871990}
-    - target: {fileID: 8927054959767307510, guid: 24615a9d471abec4da52495e63c76b02,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: f3e7b1ca4225cf840ac4b872f3bb369a, type: 2}
     - target: {fileID: 8927054959774578484, guid: 24615a9d471abec4da52495e63c76b02,
         type: 3}
       propertyPath: m_Name
@@ -2197,11 +2187,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9087559581626645526, guid: 24615a9d471abec4da52495e63c76b02,
-        type: 3}
-      propertyPath: maxHealth
-      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2093673548729434904
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 645318083729104165}
+  m_Layer: 0
+  m_Name: ProjectileSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &645318083729104165
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2093673548729434904}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0.025, z: 0.05}
+  m_LocalScale: {x: 0.033333335, y: 0.033333335, z: 0.033333335}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8927054959775001364}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &8927054959774609814
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30,15 +61,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 59afa1f2c595d6343b15e945602e1f8f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 13.8
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 59afa1f2c595d6343b15e945602e1f8f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.23
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 59afa1f2c595d6343b15e945602e1f8f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: -4.06684
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 59afa1f2c595d6343b15e945602e1f8f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -74,7 +105,11 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: f3e7b1ca4225cf840ac4b872f3bb369a, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 400002, guid: 59afa1f2c595d6343b15e945602e1f8f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 645318083729104165}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100002, guid: 59afa1f2c595d6343b15e945602e1f8f,
         type: 3}
@@ -88,10 +123,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 9087559581626645526}
-    - targetCorrespondingSourceObject: {fileID: 100002, guid: 59afa1f2c595d6343b15e945602e1f8f,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -757181370800449127}
   m_SourcePrefab: {fileID: 100100000, guid: 59afa1f2c595d6343b15e945602e1f8f, type: 3}
 --- !u!95 &8927054959767307510 stripped
 Animator:
@@ -123,7 +154,10 @@ MonoBehaviour:
   damage: 5
   animator: {fileID: 8927054959767307510}
   isAttacking: 0
-  isWalking: 0
+  isFlying: 0
+  projectilePrefab: {fileID: 6975910437059499733, guid: fbbf2190849ddab4095291c78a4a74ed,
+    type: 3}
+  projectileSpawn: {fileID: 645318083729104165}
   player: {fileID: 0}
   distanceFromPlayer: 0
   minChaseDistance: 10
@@ -146,7 +180,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.2
+  m_Radius: 0.03
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &9087559581626645526
 MonoBehaviour:
@@ -160,22 +194,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee97e479dc4dba4fa21acf16373975b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 20
+  maxHealth: 100
   currHealth: 0
---- !u!114 &-757181370800449127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+--- !u!4 &8927054959775001364 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 400002, guid: 59afa1f2c595d6343b15e945602e1f8f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8927054959774609814}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8927054959774578484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 86e25068556841e48a2dd698bbd42234, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  slider: {fileID: 0}
-  camera: {fileID: 0}
-  target: {fileID: 0}
-  offset: {x: 0, y: 0, z: 0}
-  enemyGameObject: {fileID: 0}
