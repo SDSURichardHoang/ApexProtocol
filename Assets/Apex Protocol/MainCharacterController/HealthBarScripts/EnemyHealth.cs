@@ -24,11 +24,11 @@ public class EnemyHealth : MonoBehaviour
             float rand = Random.value;
             if(rand < .5)
             {
-                Instantiate(HealthPack);
+                Instantiate(HealthPack,this.transform.position,this.transform.rotation);
             }
             else
             {
-                Instantiate(ammoPack);
+                Instantiate(ammoPack,this.transform.position,this.transform.rotation);
 
             }
             

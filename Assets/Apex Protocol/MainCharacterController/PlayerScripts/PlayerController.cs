@@ -172,7 +172,7 @@ public class PlayerController : MonoBehaviour
         // fall damage
         if (isGrounded)
         {
-            if (fallDamageTimer > 5)
+            if (fallDamageTimer > 1.5)
             {
                 Debug.Log(fallDamageTimer);
                 this.GetComponent<Health>().takeDamage(fallDamageTimer*fallDamageTimer);
