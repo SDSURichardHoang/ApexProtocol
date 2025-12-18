@@ -13,10 +13,11 @@ public class PlayerController : MonoBehaviour
 {
     public static PlayerController Instance;
     [SerializeField] private CharacterController characterController;
-    [SerializeField] private Camera playerCamera;
+    public Camera playerCamera;
     [SerializeField] public Animator animator;
     public Transform spineTransform;
     [HideInInspector] public StaminaController staminaController;
+    public GameObject EnemyHealthBarPrefab;
 
 
     public float runAcceleration = 0.25f;

@@ -5,33 +5,41 @@ using UnityEngine.UI;
 public class EnemyHealthBar : MonoBehaviour
 {
     public static EnemyHealthBar Instance;
-    [SerializeField] private Slider slider;
-    [SerializeField] private Camera camera;
-    [SerializeField] private Transform target;
-    [SerializeField] private Vector3 offset;
-    [SerializeField] public GameObject enemyGameObject;
+    private Slider slider;
+    private Camera camera;
+    private Transform target;
+    [SerializeField] private Vector3 offset = new Vector3(0f,2f,0f);
+    private GameObject enemyGameObject;
+    public GameObject healthbarPrefab;
+    GameObject healthBar;
 
     private void Awake()
     {
+        target = this.transform;
         Instance = this;
+            healthBar = Instantiate(healthbarPrefab);
+
+            slider = healthBar.transform.GetChild(0).GetComponent<Slider>();
     }
 
 
     void Update()
     {
+        camera = PlayerController.Instance.playerCamera;
         float health = 0;
         float maxHealth = 0;
-        if (target != null && target.TryGetComponent<EnemyHealth>(out var enemyHealth))
+        healthBar.transform.position = this.transform.position + offset;
+        healthBar.transform.rotation= camera.transform.rotation;
+        if (target != null && this.TryGetComponent<EnemyHealth>(out var enemyHealth))
         {
             health = enemyHealth.currHealth;
             maxHealth = enemyHealth.maxHealth;
-            transform.rotation = camera.transform.rotation;
-            transform.position = target.position + offset;
         }
 
         slider.value = health / maxHealth;
         if (target == null ||  health <= 0) {
-            Destroy(enemyGameObject);
+            Destroy(healthBar);
         }
+        
     }
 }
