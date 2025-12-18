@@ -59,7 +59,16 @@ public class GunSystem : MonoBehaviour
     }
     public void Update()
     {
-        flameEffect();
+        if (reloading)
+        {
+            animator.SetBool("isReloading", true);
+        }
+        else
+        {
+
+            animator.SetBool("isReloading", false);
+        }
+            flameEffect();
         assignAnimation();
         slotChange(-1);
         // assign currweapon to the active slot 
