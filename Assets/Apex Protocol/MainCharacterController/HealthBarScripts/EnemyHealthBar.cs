@@ -11,7 +11,7 @@ public class EnemyHealthBar : MonoBehaviour
     [SerializeField] private Vector3 offset = new Vector3(0f,2f,0f);
     private GameObject enemyGameObject;
     public GameObject healthbarPrefab;
-    GameObject healthBar;
+    public GameObject healthBar;
 
     private void Awake()
     {

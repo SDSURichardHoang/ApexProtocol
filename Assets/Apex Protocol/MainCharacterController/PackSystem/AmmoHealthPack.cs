@@ -5,7 +5,11 @@ using UnityEngine;
 public class AmmoHealthPack : MonoBehaviour
 {
     public float equipRange = 1f;
+    public static AmmoHealthPack Instance;
     // Start is called before the first frame update
+    public GameObject ammoPack;
+    public GameObject HealthPack;
+
     void Start()
     {
         

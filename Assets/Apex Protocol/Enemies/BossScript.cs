@@ -19,8 +19,11 @@ public class BossScript : MonoBehaviour
     public Transform projectilePoint;
 
     private NavMeshAgent agent;
-    private float attackTimer;
     private bool beginEncounter;
+    float meleeTimer;
+    float throwTimer;
+    bool canAttack;
+    bool meleeCalled, throwCalled;
 
     // Start is called before the first frame update
     void Start()
@@ -29,15 +32,19 @@ public class BossScript : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.speed = speed;
         arenaCenter = transform.position;
-        attackTimer = cooldown;
         player = PlayerController.Instance.transform;
+        throwTimer = 1f;
+        meleeTimer= 0.5f;
+        canAttack = true;
+        meleeCalled = false;
+        throwCalled = false; 
     }
 
     // Update is called once per frame
     void Update()
     {
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
-
+        ChasePlayer();
         //code to detect the player and begin the encounter
         if (!beginEncounter && distanceToPlayer <= escapeRange)
         {
@@ -48,35 +55,33 @@ public class BossScript : MonoBehaviour
         if (beginEncounter && distanceToPlayer > escapeRange)
         {
             beginEncounter = false;
-            animator.SetBool("isWalking", false);
             agent.isStopped = true;
             return;
         }
 
         if (beginEncounter)
         {
-            if (agent.isStopped)
-            {
-                Vector3 lookPos = player.position - transform.position;
-                lookPos.y = 0; // keep rotation flat
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookPos), Time.deltaTime * 5f);
-            }
 
-            attackTimer -= Time.deltaTime;
 
-            if (distanceToPlayer <= meleeRange && attackTimer <= 0f)
+            if (distanceToPlayer <= meleeRange && canAttack)
                 //does a melee attack if close enough
             {
-                MeleeAttack();
+                meleeCalled = true;
             }
-            else if (distanceToPlayer <= projectileRange && attackTimer <= 0f)
+            else if (distanceToPlayer <= projectileRange && distanceToPlayer >= meleeRange && canAttack)
+
                 //does a ranged attack if too far from player
             {
+                throwCalled = true;
                 RangedAttack();
             }
-            else
+            if (meleeCalled)
             {
-                ChasePlayer();
+                MeleeAttack();
+            }else if (throwCalled)
+            {
+
+                RangedAttack();
             }
         }
     }
@@ -84,36 +89,47 @@ public class BossScript : MonoBehaviour
     //code for the boss' melee attack
     void MeleeAttack()
     {
-        agent.isStopped = true;
-        animator.SetBool("isWalking", false);
-        animator.SetBool("ThrowAttack", false);
+        meleeTimer-= Time.deltaTime;
+        canAttack = false;
         animator.SetBool("MeleeAttack", true);
-        player.GetComponent<Health>().takeDamage(meleeDamage);
-        attackTimer = cooldown;
+        if (meleeTimer<= 0f)
+        {
+            meleeCalled = false;
+            canAttack = true;
+            animator.SetBool("MeleeAttack", false);
+            meleeTimer = 2f;
+            player.GetComponent<Health>().takeDamage(meleeDamage);
+
+        }
     }
 
     //code for the boss' projectile attack
     void RangedAttack()
     {
-        agent.isStopped = true;
-        animator.SetBool("isWalking", false);
-        animator.SetBool("MeleeAttack", false);
+        throwTimer-=Time.deltaTime;
         animator.SetBool("ThrowAttack", true);
-        GameObject bossProjectile = Instantiate(projectilePrefab, projectilePoint.position, Quaternion.identity);
-        Rigidbody rb = bossProjectile.GetComponent<Rigidbody>();
-        Vector3 direction = (player.position - projectilePoint.position).normalized;
-        rb.AddForce(direction * 500f); // adjust force for balance
-        attackTimer = cooldown;
+        canAttack = false;
+        if (throwTimer <= 0f)
+        {
+            throwCalled = false;
+            canAttack = true;
+            animator.SetBool("ThrowAttack", false);
+            throwTimer = 1f;
+
+
+             // rock logic
+            GameObject bossProjectile = Instantiate(projectilePrefab, projectilePoint.position, projectilePoint.transform.rotation);
+            Rigidbody rb = bossProjectile.GetComponent<Rigidbody>();
+            Vector3 direction = (player.position - projectilePoint.position).normalized;
+            rb.AddForce(direction * 750f); // adjust force for balance
+        }
+
     }
 
     //code to approach the player if too far to attack
     void ChasePlayer()
     {
-        agent.isStopped = false;
-        animator.SetBool("MeleeAttack", false);
-        animator.SetBool("ThrowAttack", false);
         animator.SetBool("isWalking", true);
-        agent.isStopped = false;
         agent.SetDestination(player.position);
     }
 }
