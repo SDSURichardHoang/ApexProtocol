@@ -6,6 +6,7 @@ using UnityEngine;
 using Cinemachine;
 using UnityEngine.UI;
 using KevinIglesias;
+using Unity.VisualScripting;
 
 
 public class GunSystem : MonoBehaviour
@@ -22,6 +23,8 @@ public class GunSystem : MonoBehaviour
 
     public GameObject muzzleFlash;
     public GameObject bloodSplatter;
+    public GameObject boneEffect;
+    public GameObject stoneEffect;
     public GameObject bulletHoleGraphic;
     public Camera GunCamera;
     public Transform attackPoint;
@@ -216,9 +219,16 @@ public class GunSystem : MonoBehaviour
                     {
                         case "BatEnemy":
                         case "SlimeEnemy":
-                        case "DevilEnemy":
                             GameObject bloodSplatterTemp = Instantiate(bloodSplatter, RayHit.point + RayHit.normal * 0.01f, Quaternion.LookRotation(RayHit.normal * -1f));
                             Destroy(bloodSplatterTemp, .55f);
+                            break;
+                        case "SkeletonEnemy":
+                            GameObject boneTemp= Instantiate(boneEffect, RayHit.point + RayHit.normal * 0.01f, Quaternion.LookRotation(RayHit.normal * -1f));
+                            Destroy(boneTemp, .55f);
+                            break;
+                        case "GiantModel01 - Golem":
+                            GameObject stoneTemp= Instantiate(stoneEffect, RayHit.point + RayHit.normal * 0.01f, Quaternion.LookRotation(RayHit.normal * -1f));
+                            Destroy(stoneTemp, .55f);
                             break;
                     }
 

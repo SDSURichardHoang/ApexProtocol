@@ -245,7 +245,7 @@ MonoBehaviour:
   magazineSize: 6
   totalAmmo: 24
   reloadDisplayTotalAmmo: 24
-  damage: 35
+  damage: 45
   bulletsLeft: 6
   bulletsShot: 0
   allowButtonhold: 0
