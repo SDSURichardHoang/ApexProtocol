@@ -123,6 +123,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 9087559581626645526}
+    - targetCorrespondingSourceObject: {fileID: 100002, guid: 59afa1f2c595d6343b15e945602e1f8f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -2277108196574324506}
   m_SourcePrefab: {fileID: 100100000, guid: 59afa1f2c595d6343b15e945602e1f8f, type: 3}
 --- !u!95 &8927054959767307510 stripped
 Animator:
@@ -196,6 +200,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currHealth: 0
+--- !u!114 &-2277108196574324506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8927054959774578484}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e25068556841e48a2dd698bbd42234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 2, z: 0}
+  healthbarPrefab: {fileID: 1513403563682184244, guid: 7644bbe6c8897bd408367e388de82eed,
+    type: 3}
 --- !u!4 &8927054959775001364 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400002, guid: 59afa1f2c595d6343b15e945602e1f8f,

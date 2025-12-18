@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: be3776e9bd6e31341b3490a035f6ea50,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.7304955
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: be3776e9bd6e31341b3490a035f6ea50,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.000099897385
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: be3776e9bd6e31341b3490a035f6ea50,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.189085
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: be3776e9bd6e31341b3490a035f6ea50,
         type: 3}
@@ -63,6 +63,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: SkeletonEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: be3776e9bd6e31341b3490a035f6ea50,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: be3776e9bd6e31341b3490a035f6ea50,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 5866666021909216657, guid: be3776e9bd6e31341b3490a035f6ea50,
         type: 3}
       propertyPath: m_Controller
@@ -87,7 +97,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: be3776e9bd6e31341b3490a035f6ea50,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: -9051951998284611890}
+      addedObject: {fileID: 6136186689893255053}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: be3776e9bd6e31341b3490a035f6ea50,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5580001265433782014}
   m_SourcePrefab: {fileID: 100100000, guid: be3776e9bd6e31341b3490a035f6ea50, type: 3}
 --- !u!1 &1470097470969498553 stripped
 GameObject:
@@ -153,8 +167,8 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &-9051951998284611890
-SphereCollider:
+--- !u!136 &6136186689893255053
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -171,9 +185,26 @@ SphereCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 3
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &5580001265433782014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470097470969498553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e25068556841e48a2dd698bbd42234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 2, z: 0}
+  healthbarPrefab: {fileID: 1513403563682184244, guid: 7644bbe6c8897bd408367e388de82eed,
+    type: 3}
 --- !u!95 &5317952521386052473 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: be3776e9bd6e31341b3490a035f6ea50,

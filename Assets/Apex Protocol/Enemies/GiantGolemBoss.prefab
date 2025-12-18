@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6035613592653471369
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7807002149163383623}
+  m_Layer: 0
+  m_Name: ThrowingPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7807002149163383623
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6035613592653471369}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0, z: -0, w: 1}
+  m_LocalPosition: {x: 1.3, y: 2, z: 0}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5522761487328256481}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &5417394063208203786
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93,9 +124,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: GiantGolemBoss
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cfbfb95b5f2b90949be0b5faab2775fb,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: cfbfb95b5f2b90949be0b5faab2775fb,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: dac3ad1d4c68df24da52bbd7f0e3bd62, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: cfbfb95b5f2b90949be0b5faab2775fb,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7807002149163383623}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cfbfb95b5f2b90949be0b5faab2775fb,
         type: 3}
@@ -108,12 +153,18 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cfbfb95b5f2b90949be0b5faab2775fb,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: -1697325305028731338}
+      addedObject: {fileID: 7558400030779699710}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cfbfb95b5f2b90949be0b5faab2775fb,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7558400030779699710}
+      addedObject: {fileID: 8420413746959690632}
   m_SourcePrefab: {fileID: 100100000, guid: cfbfb95b5f2b90949be0b5faab2775fb, type: 3}
+--- !u!95 &1892891298173909915 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: cfbfb95b5f2b90949be0b5faab2775fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5417394063208203786}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &5183391259692694363 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cfbfb95b5f2b90949be0b5faab2775fb,
@@ -133,6 +184,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
+  meleeRange: 5
+  projectileRange: 10
+  meleeDamage: 10
+  cooldown: 7
+  escapeRange: 30
+  arenaSize: 20
+  player: {fileID: 0}
+  animator: {fileID: 1892891298173909915}
+  projectilePrefab: {fileID: 608663803354872274, guid: b8dc76553688baa4e83fe9a1ff8cca1d,
+    type: 3}
+  projectilePoint: {fileID: 7807002149163383623}
 --- !u!195 &3188166854331362063
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -155,8 +217,22 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!135 &-1697325305028731338
-SphereCollider:
+--- !u!114 &7558400030779699710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5183391259692694363}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ee97e479dc4dba4fa21acf16373975b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1000
+  currHealth: 0
+--- !u!136 &8420413746959690632
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -173,20 +249,14 @@ SphereCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7558400030779699710
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  serializedVersion: 2
+  m_Radius: 0.75
+  m_Height: 2.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.5, z: 0}
+--- !u!4 &5522761487328256481 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: cfbfb95b5f2b90949be0b5faab2775fb,
+    type: 3}
+  m_PrefabInstance: {fileID: 5417394063208203786}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5183391259692694363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ee97e479dc4dba4fa21acf16373975b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 1000
-  currHealth: 0

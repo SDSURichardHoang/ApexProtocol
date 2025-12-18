@@ -233,6 +233,7 @@ GameObject:
   - component: {fileID: -7354802935155888726}
   - component: {fileID: 3610945455710843884}
   - component: {fileID: 3046574504273266906}
+  - component: {fileID: 2213939535838877444}
   m_Layer: 0
   m_Name: SlimeEnemy
   m_TagString: Enemy
@@ -330,7 +331,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 2797357656398053886}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.001
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -357,6 +358,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 150
   currHealth: 0
+--- !u!114 &2213939535838877444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2797357656398053886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86e25068556841e48a2dd698bbd42234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  offset: {x: 0, y: 2, z: 0}
+  healthbarPrefab: {fileID: 1513403563682184244, guid: 7644bbe6c8897bd408367e388de82eed,
+    type: 3}
 --- !u!1 &3731067866843285664
 GameObject:
   m_ObjectHideFlags: 0
