@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/level_2/level_2.unity
     guid: c09b47cde5fad6449a28b168f340e5a9
+  - enabled: 1
+    path: Assets/Scenes/Main Screen Transitions/Game Over.unity
+    guid: 5a8326ed16736db43a24920283d4a05c
   m_configObjects: {}

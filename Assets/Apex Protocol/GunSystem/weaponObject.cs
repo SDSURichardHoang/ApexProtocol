@@ -64,14 +64,18 @@ public class weaponObject : MonoBehaviour
 
     private void Update()
     {
+       
         Vector3 distanceToPlayer = player.position - transform.position;
         wpnInSlot = GunSystem.Instance.wpnSlots[GunSystem.Instance.activeSlot];
+        // if within range and we try to pick up 
         if (distanceToPlayer.magnitude <= EquipRange && Input.GetKeyDown(KeyCode.E) && !isEquipped)
         {
+            // if we have an empty slot active then just equip regular
           if(wpnInSlot == null)
             {
                 Equip();
             }
+          // if our slot is full but we have an open slot that is non active then switch to that one and equip
             else if (GunSystem.Instance.wpnSlots[GunSystem.Instance.otherSlot]==null)
             {
                 GunSystem.Instance.activeSlot = GunSystem.Instance.otherSlot;
@@ -81,6 +85,7 @@ public class weaponObject : MonoBehaviour
             }
         }
 
+        // if we have a gun and want to drop it
         if(isEquipped && Input.GetKeyDown(KeyCode.Q))
         {
             Drop();
@@ -126,8 +131,7 @@ public class weaponObject : MonoBehaviour
         setWeaponValues(true);
         Debug.Log(transform.tag);
 
-        // assign the position and scale of the weapon
-        // TODO check if this persists with weapon switches
+        // assign the position and scale of the weapon upon pickup
         switch (transform.tag)
         {
             case "Pistol":
@@ -166,10 +170,12 @@ public class weaponObject : MonoBehaviour
 
     }
 
+    
     private void Drop()
     {
         if (GunSystem.Instance.activeSlot == slot)
         {
+            // if we drop a weapon set it 0 rotation, flamethrower model is offset so we account for that 
             if(transform.tag == "Flamethrower")
             {   
                transform.rotation = Quaternion.Euler(90f,0f,0f);
@@ -183,6 +189,7 @@ public class weaponObject : MonoBehaviour
         
 
     }
+    // when we pickup or drop a weapon handle the enable/disabling of relevant weapon settings
     public void setWeaponValues(bool hasWeapon) 
     {
         

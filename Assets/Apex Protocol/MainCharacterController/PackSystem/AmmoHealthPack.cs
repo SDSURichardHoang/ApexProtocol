@@ -14,6 +14,7 @@ public class AmmoHealthPack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
     if((PlayerController.Instance.spineTransform.position - transform.position).magnitude <= equipRange)
         {
             switch (transform.tag)

@@ -62,6 +62,7 @@ public class GunSystem : MonoBehaviour
         flameEffect();
         assignAnimation();
         slotChange(-1);
+        // assign currweapon to the active slot 
         if (wpnSlots[0] != null && activeSlot == 0)
         {
             currWeapon = wpnSlots[0];
@@ -72,6 +73,7 @@ public class GunSystem : MonoBehaviour
 
 
         }
+        // assign weapon equipped the first time
         if (weaponEquipped != null)
         {
             weaponEquipped = currWeapon.transform;
@@ -82,9 +84,11 @@ public class GunSystem : MonoBehaviour
 
 
     }
+    // handle user input
     private void MyInput()
     {
 
+        // handle semi auto vs full auto weapon shooting 
         if (currWeapon.allowButtonhold)
         {
 
@@ -99,29 +103,35 @@ public class GunSystem : MonoBehaviour
 
 
 
-
+        // reload if we have ammo left 
         if (Input.GetKeyDown(KeyCode.R) && currWeapon.bulletsLeft < currWeapon.magazineSize && !reloading)
         {
             Reload();
         }
 
 
-
+        // shoot if not reloading, shooting, and have ammo
         if (readytoShoot && shooting && !reloading && currWeapon.bulletsLeft > 0)
         {
             currWeapon.bulletsShot = currWeapon.bulletsPerTap;
             //Invoke("aimIn",0f);
             //Invoke("Shoot", 0.25f);
+            // aim in in case not already aiming in
             aimIn();
             Shoot();
 
         }
 
-
+        // reset fov after aiming
         vCam.m_Lens.FieldOfView = 72f;
+        // set aim animation
         animator.SetBool(aimAnimate, isAiming);
+        
 
+        // if not aiming then we set our weapon transform to the idle settings aka non aiming settings
         setTransform("idle");
+
+        // aim input
         if (Input.GetKey(KeyCode.Mouse1))
         {
             isAiming = true;
@@ -129,6 +139,7 @@ public class GunSystem : MonoBehaviour
         }
         else
         {
+            // fix for grapple animation to ensure it resets
             if (!PlayerController.Instance.isGrappling)
             {
                 isAiming = false;
@@ -136,6 +147,7 @@ public class GunSystem : MonoBehaviour
         }
 
     }
+    // when aiming increase fov and change animation
     public void aimIn()
     {
         isAiming = true;
@@ -144,6 +156,7 @@ public class GunSystem : MonoBehaviour
         animator.SetBool(aimAnimate, isAiming);
     }
 
+    // reload for certain time and restore ammo
     private void Reload()
     {
         reloading = true;
@@ -153,6 +166,7 @@ public class GunSystem : MonoBehaviour
         currWeapon.reloadDisplayTotalAmmo = currWeapon.totalAmmo;
     }
 
+    
     private void ReloadFinished()
     {
         currWeapon.bulletsLeft = currWeapon.magazineSize;
@@ -162,9 +176,11 @@ public class GunSystem : MonoBehaviour
 
     private void Shoot()
     {
+        // subtract bullet from ammo and other tracking variables
         currWeapon.bulletsLeft--;
         currWeapon.bulletsShot--;
         currWeapon.totalAmmo--;
+        // not ready to shoot again 
         readytoShoot = false;
 
 
@@ -176,11 +192,12 @@ public class GunSystem : MonoBehaviour
 
 
         Ray ray = Camera.main.ScreenPointToRay(new Vector3(Screen.width / 2f, Screen.height / 2f));
+        // for traditional weapons we use rays to achieve bullet hit scan
         if (currWeapon.tag != "Flamethrower")
         {
             if (Physics.Raycast(ray, out RaycastHit RayHit, currWeapon.range))
             {
-
+                // we use different effects for enemies such as blood etc
                 if (RayHit.collider.CompareTag("Enemy"))
                 {
 
@@ -198,6 +215,7 @@ public class GunSystem : MonoBehaviour
 
 
                 }
+                // if we hit a non enemy, so an object tehn we instatiate a bullet hole texture
                 else
                 {
                     if (currWeapon.tag != "Flamethrower")
@@ -208,10 +226,11 @@ public class GunSystem : MonoBehaviour
                 }
             }
         }
-        else
+        else // if we ARE using flamethrower
         {
             float radius = 0.3f;         // width of the flame
             float maxDistance = 10f;   // range
+            // use a sphere ray so we can register hits on enemy within the area of the flame 
             Ray rayflame = new Ray(weaponBarrel.transform.transform.position, weaponBarrel.transform.forward);
             RaycastHit[] hits = Physics.SphereCastAll(ray, radius, maxDistance);
 
@@ -225,8 +244,11 @@ public class GunSystem : MonoBehaviour
 
         }
 
+
+        // MUZZLE FLASHES
         Quaternion rotationBullet = Quaternion.LookRotation(RayHit.normal * -1f);
         GameObject muzzleFlashClone = null;
+        // flamethrower has a flame 
         if(currWeapon.tag == "Flamethrower")
         {
             Debug.Log("Test");
@@ -235,6 +257,7 @@ public class GunSystem : MonoBehaviour
             //muzzleFlashClone = Instantiate(flame, weaponBarrel.transform.Iposition, rotationFlame);
             //muzzleFlashClone = Instantiate(flame, weaponBarrel.transform.position,player.rotation* Quaternion.Euler(0f,20f,0f) );
         }
+        // ar is a laser rifle so the muzzle flash is blue purple laser effect
         else if(currWeapon.tag== "Assault_Rifle")
         {
 
@@ -242,13 +265,16 @@ public class GunSystem : MonoBehaviour
             //Color flashColor = muzzleFlashClone.GetComponent<Color>();
             //flashColor = new Color(0f, 0.2f, 1f);
         }
+        // all other are standard muzzle flashes
         else
         {
 
             muzzleFlashClone = Instantiate(muzzleFlash, weaponBarrel.transform.position, Quaternion.identity);
         }
+        // play fire sound
         AudioClip fireSoundAudio = weaponEquipped.GetComponent<weaponObject>().fireSound;
         audioSource.PlayOneShot(fireSoundAudio, weaponEquipped.GetComponent<weaponObject>().soundVol);
+        // remove the muzzle flash after .2 seconds
         Destroy(muzzleFlashClone, .2f);
 
 
@@ -265,6 +291,7 @@ public class GunSystem : MonoBehaviour
     {
         readytoShoot = true;
     }
+    // assigns the transform rotation for aiming or non aiming 
     private void setTransform(string IdleOrAiming)
     {
 
@@ -332,6 +359,7 @@ public class GunSystem : MonoBehaviour
 
         }
     }
+    // UI ammo update
     private void ammoText()
     {
         if (!reloading)
@@ -383,6 +411,7 @@ public class GunSystem : MonoBehaviour
 
 
     }
+    // invetory slot change ui update
     void handleSlotChange(int slot,int otherSlot)
     {
         if(wpnSlots[otherSlot] != null)
@@ -402,6 +431,8 @@ public class GunSystem : MonoBehaviour
             wpnSlots[slot].gameObject.SetActive(true);
         }
     }
+    // this is to differentiate aiming with a two handed weapon and one handed weapon
+    // and to use their respective animations
     private void assignAnimation()
     {
         if (currWeapon != null)
@@ -417,6 +448,7 @@ public class GunSystem : MonoBehaviour
         }
 
     }
+    // stop or play flame effect when firing 
     private void flameEffect()
     {
         if(currWeapon!=null && currWeapon.tag == "Flamethrower" && shooting)

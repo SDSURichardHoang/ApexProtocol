@@ -257,6 +257,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    // constrain sprint from sprinting backwards
     public bool sprintConstraints(float x, float y)
     {
         bool allowSprint = true;
